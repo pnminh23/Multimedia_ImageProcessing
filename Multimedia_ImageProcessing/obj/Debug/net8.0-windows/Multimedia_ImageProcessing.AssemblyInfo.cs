@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Multimedia_ImageProcessing")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eaa4856db9fcefc84021c64663c021e0eb8f5940")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+67bbc19e5aa0acb5843e29d84cfbec2326d2567b")]
 [assembly: System.Reflection.AssemblyProductAttribute("Multimedia_ImageProcessing")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Multimedia_ImageProcessing")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "oEmIY9SnMiE=",
+  "dgSpecHash": "wD0IlzbTut4=",
   "success": true,
   "projectFilePath": "D:\\WORKSPACE\\Multimedia\\Multimedia_ImageProcessing\\Multimedia_ImageProcessing\\Multimedia_ImageProcessing.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.win32.systemevents\\9.0.1\\microsoft.win32.systemevents.9.0.1.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\python\\3.13.1\\python.3.13.1.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\python.runtime\\2.7.9\\python.runtime.2.7.9.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\system.drawing.common\\9.0.1\\system.drawing.common.9.0.1.nupkg.sha512"
   ],
   "logs": []

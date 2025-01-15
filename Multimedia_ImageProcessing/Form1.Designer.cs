@@ -38,6 +38,7 @@
             groupBox3 = new GroupBox();
             tb_thongSo = new TextBox();
             lbl_thongSo = new Label();
+            contrastTracker = new TrackBar();
             menuStrip1 = new MenuStrip();
             tệpToolStripMenuItem = new ToolStripMenuItem();
             openTSMI = new ToolStripMenuItem();
@@ -66,6 +67,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)contrastTracker).BeginInit();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -147,6 +149,7 @@
             // 
             groupBox3.Controls.Add(tb_thongSo);
             groupBox3.Controls.Add(lbl_thongSo);
+            groupBox3.Controls.Add(contrastTracker);
             groupBox3.Location = new Point(12, 133);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(173, 181);
@@ -169,6 +172,17 @@
             lbl_thongSo.Size = new Size(56, 15);
             lbl_thongSo.TabIndex = 9;
             lbl_thongSo.Text = "Thông số";
+            // 
+            // contrastTracker
+            // 
+            contrastTracker.LargeChange = 1;
+            contrastTracker.Location = new Point(6, 50);
+            contrastTracker.Maximum = 20;
+            contrastTracker.Name = "contrastTracker";
+            contrastTracker.Size = new Size(161, 45);
+            contrastTracker.TabIndex = 9;
+            contrastTracker.Value = 10;
+            contrastTracker.Scroll += contrastTracker_Scroll;
             // 
             // menuStrip1
             // 
@@ -354,6 +368,7 @@
             groupBox2.PerformLayout();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)contrastTracker).EndInit();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
@@ -396,5 +411,6 @@
         private ToolStripMenuItem undoTSMI;
         private ToolStripMenuItem redoTSMI;
         private ToolStripMenuItem presentTSMI;
+        private TrackBar contrastTracker;
     }
 }

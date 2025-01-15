@@ -45,9 +45,17 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "dependencies": {
+            "Python.Runtime": {
+              "target": "Package",
+              "version": "[2.7.9, )"
+            },
             "System.Drawing.Common": {
               "target": "Package",
               "version": "[9.0.1, )"
+            },
+            "python": {
+              "target": "Package",
+              "version": "[3.13.1, )"
             }
           },
           "imports": [

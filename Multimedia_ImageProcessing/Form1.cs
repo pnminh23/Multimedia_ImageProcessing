@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 namespace Multimedia_ImageProcessing
@@ -7,12 +8,18 @@ namespace Multimedia_ImageProcessing
     public partial class Form1 : Form
     {
         private Bitmap bitmap;
+        Image Im;
+        Image[] arrayImage = new Image[50000];
+        Boolean open = false;
+        imageProcess imP;
+
 
         public Form1()
         {
             InitializeComponent();
             lbl_thongSo.Visible = false;
             tb_thongSo.Visible = false;
+            contrastTracker.Visible = false;
             comboBox1.SelectedIndex = 0;
 
         }
@@ -35,7 +42,10 @@ namespace Multimedia_ImageProcessing
             {
 
                 // Tải ảnh từ tệp và hiển thị lên PictureBox
-                pictureBox1.Image = Image.FromFile(openFileDialog.FileName);
+                Im = Image.FromFile(openFileDialog.FileName);
+                pictureBox1.Image = Im;
+                open = true;
+
                 pictureBox1.BackgroundImage = null;
                 pictureBox1.BackColor = Color.Black;
 
@@ -78,8 +88,10 @@ namespace Multimedia_ImageProcessing
             }
             else if (comboBox1.SelectedIndex == 4)
             {
-                lbl_thongSo.Text = "Độ tương phản";
-                appear();
+                lbl_thongSo.Text = "Điều chỉnh thông số";
+                lbl_thongSo.Visible = true;
+                contrastTracker.Visible = true;
+                btn_apDung.Visible = false;
 
             }
             else if (comboBox1.SelectedIndex == 5)
@@ -122,7 +134,67 @@ namespace Multimedia_ImageProcessing
 
         private void btn_apDung_Click(object sender, EventArgs e)
         {
+            if (comboBox1.SelectedIndex == 5)
+            {
+                string inputImage = openFileDialog.FileName;
 
+                // Lấy đường dẫn thư mục `output` trong dự án
+                string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                string outputFolder = Path.Combine(projectDirectory, "output");
+
+                //Tạo thư mục `output` nếu chưa tồn tại
+                if (!Directory.Exists(outputFolder))
+                {
+                    Directory.CreateDirectory(outputFolder);
+                }
+
+                // Đường dẫn file đầu ra
+                string outputImage = Path.Combine(outputFolder, "removeBkg_output.png");
+                imP = new imageProcess();
+                // Gọi hàm xử lý
+                imP.RemoveBackground(inputImage, outputImage);
+                // Hiển thị ảnh đã xử lý lên PictureBox
+                if (File.Exists(outputImage)) // Kiểm tra ảnh đã được tạo
+                {
+                    pictureBox1.Image = new Bitmap(outputImage);
+                    //MessageBox.Show("Ảnh đã được xử lý và hiển thị!");
+                }
+                else
+                {
+                    MessageBox.Show("Không thể tìm thấy ảnh đã xử lý.");
+                }
+            }
+        }
+
+        private void contrastTracker_Scroll(object sender, EventArgs e)
+        {
+            if (!open)
+            {
+                MessageBox.Show("Hãy mở ảnh để chỉnh sửa", "Ảnh chưa được mở", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                float c = Convert.ToSingle(contrastTracker.Value) / 10.0f;
+                float t = (1.0f - c) / 2.0f;
+                Image img = Im;
+                Bitmap bmpInverted = new Bitmap(img.Width, img.Height);
+
+                ImageAttributes ia = new ImageAttributes();
+                ColorMatrix cmPicture = new ColorMatrix(new float[][]
+                {
+                    new float[]{c,0,0,0,0},
+                    new float[]{0,c,0,0,0},
+                    new float[]{0,0,c,0,0},
+                    new float[]{0, 0, 0, 1, 0},
+                    new float[]{t, t, t, 0, 1}
+                });
+                ia.SetColorMatrix(cmPicture);
+                Graphics g = Graphics.FromImage(bmpInverted);
+                g.DrawImage(img, new Rectangle(0, 0, img.Width, img.Height), 0, 0, img.Width, img.Height, GraphicsUnit.Pixel, ia);
+                g.Dispose();
+                pictureBox1.Image = bmpInverted;
+
+            }
         }
     }
 }

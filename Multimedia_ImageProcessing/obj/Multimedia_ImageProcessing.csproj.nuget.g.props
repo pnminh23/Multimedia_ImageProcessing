@@ -12,4 +12,7 @@
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <SourceRoot Include="C:\Users\Administrator\.nuget\packages\" />
   </ItemGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Pkgpython Condition=" '$(Pkgpython)' == '' ">C:\Users\Administrator\.nuget\packages\python\3.13.1</Pkgpython>
+  </PropertyGroup>
 </Project>
