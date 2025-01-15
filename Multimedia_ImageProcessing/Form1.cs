@@ -12,6 +12,7 @@ namespace Multimedia_ImageProcessing
         Image[] arrayImage = new Image[50000];
         Boolean open = false;
         imageProcess imP;
+        int counter = 0;
 
 
         public Form1()
@@ -45,7 +46,8 @@ namespace Multimedia_ImageProcessing
                 Im = Image.FromFile(openFileDialog.FileName);
                 pictureBox1.Image = Im;
                 open = true;
-
+                counter = 0;
+                arrayImage[counter++] = pictureBox1.Image;
                 pictureBox1.BackgroundImage = null;
                 pictureBox1.BackColor = Color.Black;
 
@@ -90,6 +92,7 @@ namespace Multimedia_ImageProcessing
             {
                 lbl_thongSo.Text = "Điều chỉnh thông số";
                 lbl_thongSo.Visible = true;
+                tb_thongSo.Visible = false;
                 contrastTracker.Visible = true;
                 btn_apDung.Visible = false;
 
@@ -97,7 +100,10 @@ namespace Multimedia_ImageProcessing
             else if (comboBox1.SelectedIndex == 5)
             {
                 lbl_thongSo.Text = "Xoá phông";
-                appear();
+                lbl_thongSo.Visible = false;
+                tb_thongSo.Visible = false;
+                contrastTracker.Visible = false;
+                btn_apDung.Visible = true;
 
             }
             else if (comboBox1.SelectedIndex == 6)
@@ -157,6 +163,8 @@ namespace Multimedia_ImageProcessing
                 if (File.Exists(outputImage)) // Kiểm tra ảnh đã được tạo
                 {
                     pictureBox1.Image = new Bitmap(outputImage);
+                    arrayImage[counter++] = pictureBox1.Image;
+
                     //MessageBox.Show("Ảnh đã được xử lý và hiển thị!");
                 }
                 else
@@ -193,7 +201,62 @@ namespace Multimedia_ImageProcessing
                 g.DrawImage(img, new Rectangle(0, 0, img.Width, img.Height), 0, 0, img.Width, img.Height, GraphicsUnit.Pixel, ia);
                 g.Dispose();
                 pictureBox1.Image = bmpInverted;
+                arrayImage[counter++] = pictureBox1.Image;
 
+
+            }
+        }
+
+        private void undoTSMI_Click(object sender, EventArgs e)
+        {
+            if (counter > 0)
+            {
+                counter--; // Giảm counter để truy cập ảnh trước đó trong mảng
+                pictureBox1.Image = arrayImage[counter];
+            }
+            else
+            {
+                MessageBox.Show("Không thể hoàn tác nữa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void redoTSMI_Click(object sender, EventArgs e)
+        {
+            if (arrayImage[counter + 1] != null && counter < arrayImage.Length - 1) // Kiểm tra trạng thái tiếp theo có tồn tại
+            {
+                counter++; // Tiến tới trạng thái tiếp theo
+                pictureBox1.Image = arrayImage[counter]; // Gán ảnh tiếp theo
+            }
+            else
+            {
+                MessageBox.Show("Không có trạng thái nào để quay lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
+
+        private void btn_undo_Click(object sender, EventArgs e)
+        {
+            if (counter > 0)
+            {
+                counter--; // Giảm counter để truy cập ảnh trước đó trong mảng
+                pictureBox1.Image = arrayImage[counter];
+            }
+            else
+            {
+                MessageBox.Show("Không thể hoàn tác nữa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void btn_redo_Click(object sender, EventArgs e)
+        {
+            if (arrayImage[counter + 1] != null && counter < arrayImage.Length - 1) // Kiểm tra trạng thái tiếp theo có tồn tại
+            {
+                counter++; // Tiến tới trạng thái tiếp theo
+                pictureBox1.Image = arrayImage[counter]; // Gán ảnh tiếp theo
+            }
+            else
+            {
+                MessageBox.Show("Không có trạng thái nào để quay lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

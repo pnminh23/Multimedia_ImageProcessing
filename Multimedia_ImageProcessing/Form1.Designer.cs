@@ -63,6 +63,8 @@
             btn_apDung = new Button();
             comboBox1 = new ComboBox();
             label5 = new Label();
+            btn_redo = new Button();
+            btn_undo = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox2.SuspendLayout();
@@ -298,12 +300,14 @@
             undoTSMI.Name = "undoTSMI";
             undoTSMI.Size = new Size(180, 22);
             undoTSMI.Text = "Hoàn tác";
+            undoTSMI.Click += undoTSMI_Click;
             // 
             // redoTSMI
             // 
             redoTSMI.Name = "redoTSMI";
             redoTSMI.Size = new Size(180, 22);
             redoTSMI.Text = "Làm lại";
+            redoTSMI.Click += redoTSMI_Click;
             // 
             // presentTSMI
             // 
@@ -345,12 +349,35 @@
             label5.TabIndex = 8;
             label5.Text = "Chức năng";
             // 
+            // btn_redo
+            // 
+            btn_redo.Location = new Point(913, 289);
+            btn_redo.Name = "btn_redo";
+            btn_redo.Size = new Size(50, 25);
+            btn_redo.TabIndex = 10;
+            btn_redo.Text = ">>";
+            btn_redo.UseVisualStyleBackColor = true;
+            btn_redo.Click += btn_redo_Click;
+            // 
+            // btn_undo
+            // 
+            btn_undo.ImageAlign = ContentAlignment.MiddleRight;
+            btn_undo.Location = new Point(857, 289);
+            btn_undo.Name = "btn_undo";
+            btn_undo.Size = new Size(50, 25);
+            btn_undo.TabIndex = 11;
+            btn_undo.Text = "<<";
+            btn_undo.UseVisualStyleBackColor = true;
+            btn_undo.Click += btn_undo_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.ButtonHighlight;
+            BackColor = Color.White;
             ClientSize = new Size(1034, 611);
+            Controls.Add(btn_undo);
+            Controls.Add(btn_redo);
             Controls.Add(label5);
             Controls.Add(comboBox1);
             Controls.Add(btn_apDung);
@@ -412,5 +439,8 @@
         private ToolStripMenuItem redoTSMI;
         private ToolStripMenuItem presentTSMI;
         private TrackBar contrastTracker;
+        private Button button1;
+        private Button btn_redo;
+        private Button btn_undo;
     }
 }
