@@ -5,6 +5,15 @@ namespace Multimedia_ImageProcessing
         public Form1()
         {
             InitializeComponent();
+            comboBox1.SelectedIndex = 0;
+
         }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }

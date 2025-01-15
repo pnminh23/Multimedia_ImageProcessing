@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "LO5AhJ3Q2Q8=",
+  "dgSpecHash": "oEmIY9SnMiE=",
   "success": true,
   "projectFilePath": "D:\\WORKSPACE\\Multimedia\\Multimedia_ImageProcessing\\Multimedia_ImageProcessing\\Multimedia_ImageProcessing.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.win32.systemevents\\9.0.1\\microsoft.win32.systemevents.9.0.1.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\system.drawing.common\\9.0.1\\system.drawing.common.9.0.1.nupkg.sha512"
+  ],
   "logs": []
 }
