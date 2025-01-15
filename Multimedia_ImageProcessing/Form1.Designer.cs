@@ -58,7 +58,7 @@
             undoTSMI = new ToolStripMenuItem();
             redoTSMI = new ToolStripMenuItem();
             presentTSMI = new ToolStripMenuItem();
-            openFileDialog1 = new OpenFileDialog();
+            openFileDialog = new OpenFileDialog();
             btn_apDung = new Button();
             comboBox1 = new ComboBox();
             label5 = new Label();
@@ -96,6 +96,7 @@
             pictureBox1.Location = new Point(6, 21);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(588, 473);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
@@ -190,6 +191,7 @@
             openTSMI.Name = "openTSMI";
             openTSMI.Size = new Size(149, 22);
             openTSMI.Text = "Mở";
+            openTSMI.Click += openTSMI_Click;
             // 
             // saveTSMI
             // 
@@ -295,9 +297,9 @@
             presentTSMI.Size = new Size(180, 22);
             presentTSMI.Text = "Ảnh đang chỉnh sửa";
             // 
-            // openFileDialog1
+            // openFileDialog
             // 
-            openFileDialog1.FileName = "openFileDialog1";
+            openFileDialog.FileName = "openFileDialog1";
             // 
             // btn_apDung
             // 
@@ -307,6 +309,7 @@
             btn_apDung.TabIndex = 4;
             btn_apDung.Text = "Áp dụng";
             btn_apDung.UseVisualStyleBackColor = true;
+            btn_apDung.Click += btn_apDung_Click;
             // 
             // comboBox1
             // 
@@ -317,6 +320,7 @@
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(173, 23);
             comboBox1.TabIndex = 8;
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // label5
             // 
@@ -363,7 +367,7 @@
         private GroupBox groupBox2;
         private GroupBox groupBox3;
         private MenuStrip menuStrip1;
-        private OpenFileDialog openFileDialog1;
+        private OpenFileDialog openFileDialog;
         private Button btn_apDung;
         private Label label4;
         private Label label3;
