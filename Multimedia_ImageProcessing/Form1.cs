@@ -1,8 +1,8 @@
-﻿using System.Data;
+using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-//from chinh
+//from chinh goc
 namespace Multimedia_ImageProcessing
 {
     public partial class Form1 : Form
@@ -24,9 +24,9 @@ namespace Multimedia_ImageProcessing
             comboBox1.SelectedIndex = 0;
 
         }
-        void reset()
-        {
-            btn_apDung.Text = "Áp dụng";
+        public void appearChinhDoSang() {
+            lbl_thongSo.Visible = true; // Hiện Label
+            listBox1.Visible = true; // Hiện ListBox
         }
         public void appear()
         {
@@ -77,8 +77,16 @@ namespace Multimedia_ImageProcessing
             if (comboBox1.SelectedIndex == 1)
             {
                 lbl_thongSo.Text = "Độ sáng";
-                appear();
+                appearChinhDoSang(); // Gọi hàm để thực hiện các thao tác khác nếu cần
 
+                // Xóa các mục hiện có trong ListBox
+                listBox1.Items.Clear();
+
+                // Thêm 201 số nguyên từ -100 đến 100 vào ListBox
+                for (int i = -100; i <= 100; i++)
+                {
+                    listBox1.Items.Add(i);
+                }
             }
             else if (comboBox1.SelectedIndex == 2)
             {
@@ -98,7 +106,7 @@ namespace Multimedia_ImageProcessing
                 lbl_thongSo.Visible = true;
                 tb_thongSo.Visible = false;
                 contrastTracker.Visible = true;
-                btn_apDung.Text = "Lưu thay đổi";
+                btn_apDung.Visible = false;
 
             }
             else if (comboBox1.SelectedIndex == 5)
@@ -143,7 +151,7 @@ namespace Multimedia_ImageProcessing
         }
 
         private void btn_apDung_Click(object sender, EventArgs e)
-        {
+        {   //chỉnh sửa button dựa theo chức năng
             if (comboBox1.SelectedIndex == 5)
             {
                 string inputImage = openFileDialog.FileName;
@@ -176,9 +184,72 @@ namespace Multimedia_ImageProcessing
                     MessageBox.Show("Không thể tìm thấy ảnh đã xử lý.");
                 }
             }
-            if(comboBox1.SelectedIndex == 4)
+            else if (comboBox1.SelectedIndex == 1)
             {
-                arrayImage[counter++] = pictureBox1.Image;
+
+                if (listBox1.SelectedIndex != -1) // Kiểm tra nếu có mục nào được chọn
+                {
+                    int brightnessValue = (int)listBox1.Items[listBox1.SelectedIndex]; // Lấy giá trị từ Items
+
+                    string inputImage = openFileDialog.FileName;
+
+                    // Lấy đường dẫn thư mục `output` trong dự án
+                    string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                    string outputFolder = Path.Combine(projectDirectory, "output");
+
+                    // Tạo thư mục `output` nếu chưa tồn tại
+                    if (!Directory.Exists(outputFolder))
+                    {
+                        Directory.CreateDirectory(outputFolder);
+                    }
+
+                    // Đường dẫn file đầu ra
+                    string outputImage = Path.Combine(outputFolder, "ChangedoSang.png");
+                    imP = new imageProcess();
+                    // Gọi hàm xử lý
+                    imP.ChangeDoSang(inputImage, outputImage, brightnessValue);
+                    // Hiển thị ảnh đã xử lý lên PictureBox
+                    if (File.Exists(outputImage)) // Kiểm tra ảnh đã được tạo
+                    {
+                        pictureBox1.Image = new Bitmap(outputImage);
+                        arrayImage[counter++] = pictureBox1.Image;
+
+                        // MessageBox.Show("Ảnh đã được xử lý và hiển thị!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không thể tìm thấy ảnh đã xử lý.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Vui lòng chọn một số từ ListBox.");
+                }
+            }
+            else if (comboBox1.SelectedIndex == 2)
+            {
+            }
+            else if (comboBox1.SelectedIndex == 3)
+            {
+            }
+            // minh
+            else if (comboBox1.SelectedIndex == 4)
+            {
+            }
+            else if (comboBox1.SelectedIndex == 6)
+            {
+            }
+            else if (comboBox1.SelectedIndex == 7)
+            {
+            }
+            else if (comboBox1.SelectedIndex == 8)
+            {
+            }
+            else if (comboBox1.SelectedIndex == 9)
+            {
+            }
+            else if (comboBox1.SelectedIndex == 10)
+            {
             }
         }
 
@@ -209,7 +280,7 @@ namespace Multimedia_ImageProcessing
                 g.DrawImage(img, new Rectangle(0, 0, img.Width, img.Height), 0, 0, img.Width, img.Height, GraphicsUnit.Pixel, ia);
                 g.Dispose();
                 pictureBox1.Image = bmpInverted;
-                
+                arrayImage[counter++] = pictureBox1.Image;
 
 
             }
@@ -266,6 +337,68 @@ namespace Multimedia_ImageProcessing
             {
                 MessageBox.Show("Không có trạng thái nào để quay lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void saveTSMI_Click_1(object sender, EventArgs e)
+        {
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                // Thiết lập bộ lọc cho định dạng tệp
+                saveFileDialog.Filter = "JPEG Image|*.jpg|PNG Image|*.png|Bitmap Image|*.bmp|GIF Image|*.gif";
+                saveFileDialog.Title = "Save an Image";
+
+                // Hiển thị hộp thoại và kiểm tra nếu người dùng nhấn nút Lưu
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        // Kiểm tra nếu có ảnh trong PictureBox
+                        if (pictureBox1.Image != null)
+                        {
+                            // Lưu ảnh theo định dạng được chọn
+                            string extension = Path.GetExtension(saveFileDialog.FileName).ToLower();
+                            System.Drawing.Imaging.ImageFormat format;
+
+                            switch (extension)
+                            {
+                                case ".jpg":
+                                case ".jpeg":
+                                    format = System.Drawing.Imaging.ImageFormat.Jpeg;
+                                    break;
+                                case ".png":
+                                    format = System.Drawing.Imaging.ImageFormat.Png;
+                                    break;
+                                case ".bmp":
+                                    format = System.Drawing.Imaging.ImageFormat.Bmp;
+                                    break;
+                                case ".gif":
+                                    format = System.Drawing.Imaging.ImageFormat.Gif;
+                                    break;
+                                default:
+                                    MessageBox.Show("Định dạng tệp không hợp lệ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                            }
+
+                            // Lưu ảnh
+                            pictureBox1.Image.Save(saveFileDialog.FileName, format);
+                            MessageBox.Show("Ảnh đã được lưu thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Không có ảnh nào để lưu.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Lỗi khi lưu ảnh: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+               
+        private void tb_thongSo_TextChanged_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
