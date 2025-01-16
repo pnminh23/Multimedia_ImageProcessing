@@ -205,20 +205,21 @@
             // openTSMI
             // 
             openTSMI.Name = "openTSMI";
-            openTSMI.Size = new Size(149, 22);
+            openTSMI.Size = new Size(180, 22);
             openTSMI.Text = "Mở";
             openTSMI.Click += openTSMI_Click;
             // 
             // saveTSMI
             // 
             saveTSMI.Name = "saveTSMI";
-            saveTSMI.Size = new Size(149, 22);
+            saveTSMI.Size = new Size(180, 22);
             saveTSMI.Text = "Lưu";
+            saveTSMI.Click += saveTSMI_Click_1;
             // 
             // fomatTSMI
             // 
             fomatTSMI.Name = "fomatTSMI";
-            fomatTSMI.Size = new Size(149, 22);
+            fomatTSMI.Size = new Size(180, 22);
             fomatTSMI.Text = "Đổi định dạng";
             // 
             // chỉnhSửaToolStripMenuItem
