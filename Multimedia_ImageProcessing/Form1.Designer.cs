@@ -65,6 +65,7 @@
             label5 = new Label();
             btn_redo = new Button();
             btn_undo = new Button();
+            listBox1 = new ListBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox2.SuspendLayout();
@@ -151,6 +152,7 @@
             // 
             groupBox3.Controls.Add(tb_thongSo);
             groupBox3.Controls.Add(lbl_thongSo);
+            groupBox3.Controls.Add(listBox1);
             groupBox3.Controls.Add(contrastTracker);
             groupBox3.Location = new Point(12, 133);
             groupBox3.Name = "groupBox3";
@@ -165,6 +167,7 @@
             tb_thongSo.Name = "tb_thongSo";
             tb_thongSo.Size = new Size(161, 23);
             tb_thongSo.TabIndex = 10;
+            tb_thongSo.TextChanged += tb_thongSo_TextChanged_1;
             // 
             // lbl_thongSo
             // 
@@ -174,6 +177,14 @@
             lbl_thongSo.Size = new Size(56, 15);
             lbl_thongSo.TabIndex = 9;
             lbl_thongSo.Text = "Thông số";
+            // 
+            // listBox1
+            // 
+            listBox1.FormattingEnabled = true;
+            listBox1.Location = new Point(6, 50);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new Size(161, 23);
+            listBox1.TabIndex = 0;
             // 
             // contrastTracker
             // 
@@ -205,21 +216,20 @@
             // openTSMI
             // 
             openTSMI.Name = "openTSMI";
-            openTSMI.Size = new Size(180, 22);
+            openTSMI.Size = new Size(149, 22);
             openTSMI.Text = "Mở";
             openTSMI.Click += openTSMI_Click;
             // 
             // saveTSMI
             // 
             saveTSMI.Name = "saveTSMI";
-            saveTSMI.Size = new Size(180, 22);
+            saveTSMI.Size = new Size(149, 22);
             saveTSMI.Text = "Lưu";
-            saveTSMI.Click += saveTSMI_Click_1;
             // 
             // fomatTSMI
             // 
             fomatTSMI.Name = "fomatTSMI";
-            fomatTSMI.Size = new Size(180, 22);
+            fomatTSMI.Size = new Size(149, 22);
             fomatTSMI.Text = "Đổi định dạng";
             // 
             // chỉnhSửaToolStripMenuItem
@@ -442,6 +452,7 @@
         private TrackBar contrastTracker;
         private Button button1;
         private Button btn_redo;
-        private Button btn_undo;
+        private Button btn_undo; 
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
