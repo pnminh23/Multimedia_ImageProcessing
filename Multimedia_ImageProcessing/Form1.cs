@@ -24,10 +24,13 @@ namespace Multimedia_ImageProcessing
             comboBox1.SelectedIndex = 0;
 
         }
-        public void appearChinhDoSang() {
-            lbl_thongSo.Visible = true; // Hiện Label
-            listBox1.Visible = true; // Hiện ListBox
-        }
+        //public void appearChinhDoSang()
+        //{
+        //    lbl_thongSo.Visible = true; // Hiện Label
+        //    listBox1.Visible = true; // Hiện ListBox
+        //    tb_thongSo.Visible = false;
+
+        //}
         public void appear()
         {
             lbl_thongSo.Visible = true;
@@ -76,17 +79,10 @@ namespace Multimedia_ImageProcessing
         {
             if (comboBox1.SelectedIndex == 1)
             {
-                lbl_thongSo.Text = "Độ sáng";
-                appearChinhDoSang(); // Gọi hàm để thực hiện các thao tác khác nếu cần
+                lbl_thongSo.Text = "Độ sáng (-100;100)";
+                /*appearChinhDoSang();*/ // Gọi hàm để thực hiện các thao tác khác nếu cần
+                appear();
 
-                // Xóa các mục hiện có trong ListBox
-                listBox1.Items.Clear();
-
-                // Thêm 201 số nguyên từ -100 đến 100 vào ListBox
-                for (int i = -100; i <= 100; i++)
-                {
-                    listBox1.Items.Add(i);
-                }
             }
             else if (comboBox1.SelectedIndex == 2)
             {
@@ -187,9 +183,9 @@ namespace Multimedia_ImageProcessing
             else if (comboBox1.SelectedIndex == 1)
             {
 
-                if (listBox1.SelectedIndex != -1) // Kiểm tra nếu có mục nào được chọn
+                if (tb_thongSo.Text != "") // Kiểm tra nếu có mục nào được chọn
                 {
-                    int brightnessValue = (int)listBox1.Items[listBox1.SelectedIndex]; // Lấy giá trị từ Items
+                    int brightnessValue = Convert.ToInt32(tb_thongSo.Text);
 
                     string inputImage = openFileDialog.FileName;
 
@@ -223,7 +219,7 @@ namespace Multimedia_ImageProcessing
                 }
                 else
                 {
-                    MessageBox.Show("Vui lòng chọn một số từ ListBox.");
+                    MessageBox.Show("Vui lòng điền hệ số điều chỉnh độ sáng");
                 }
             }
             else if (comboBox1.SelectedIndex == 2)
@@ -395,8 +391,13 @@ namespace Multimedia_ImageProcessing
                 }
             }
         }
-               
+
         private void tb_thongSo_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
         {
 
         }

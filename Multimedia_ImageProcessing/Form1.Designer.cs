@@ -38,6 +38,7 @@ namespace Multimedia_ImageProcessing
             groupBox3 = new GroupBox();
             tb_thongSo = new TextBox();
             lbl_thongSo = new Label();
+            listBox1 = new ListBox();
             contrastTracker = new TrackBar();
             menuStrip1 = new MenuStrip();
             tệpToolStripMenuItem = new ToolStripMenuItem();
@@ -65,7 +66,6 @@ namespace Multimedia_ImageProcessing
             label5 = new Label();
             btn_redo = new Button();
             btn_undo = new Button();
-            listBox1 = new ListBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox2.SuspendLayout();
@@ -181,9 +181,10 @@ namespace Multimedia_ImageProcessing
             // listBox1
             // 
             listBox1.FormattingEnabled = true;
+            listBox1.ItemHeight = 15;
             listBox1.Location = new Point(6, 50);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(161, 23);
+            listBox1.Size = new Size(161, 19);
             listBox1.TabIndex = 0;
             // 
             // contrastTracker
@@ -400,6 +401,7 @@ namespace Multimedia_ImageProcessing
             MainMenuStrip = menuStrip1;
             Name = "Form1";
             Text = "Trình chỉnh sửa ảnh ";
+            Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             groupBox2.ResumeLayout(false);
