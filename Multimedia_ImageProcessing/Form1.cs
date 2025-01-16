@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-//from chinh
+//from chinh goc
 namespace Multimedia_ImageProcessing
 {
     public partial class Form1 : Form
