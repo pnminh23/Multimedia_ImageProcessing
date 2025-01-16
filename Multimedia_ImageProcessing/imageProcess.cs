@@ -15,6 +15,7 @@ namespace Multimedia_ImageProcessing
         {
             // Có thể thêm logic khởi tạo nếu cần
         }
+
         public void RemoveBackground(string inputImage, string outputImage)
         {
             // Đường dẫn tới file Python trong thư mục project

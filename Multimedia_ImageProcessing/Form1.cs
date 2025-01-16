@@ -24,6 +24,10 @@ namespace Multimedia_ImageProcessing
             comboBox1.SelectedIndex = 0;
 
         }
+        void reset()
+        {
+            btn_apDung.Text = "Áp dụng";
+        }
         public void appear()
         {
             lbl_thongSo.Visible = true;
@@ -94,7 +98,7 @@ namespace Multimedia_ImageProcessing
                 lbl_thongSo.Visible = true;
                 tb_thongSo.Visible = false;
                 contrastTracker.Visible = true;
-                btn_apDung.Visible = false;
+                btn_apDung.Text = "Lưu thay đổi";
 
             }
             else if (comboBox1.SelectedIndex == 5)
@@ -172,6 +176,10 @@ namespace Multimedia_ImageProcessing
                     MessageBox.Show("Không thể tìm thấy ảnh đã xử lý.");
                 }
             }
+            if(comboBox1.SelectedIndex == 4)
+            {
+                arrayImage[counter++] = pictureBox1.Image;
+            }
         }
 
         private void contrastTracker_Scroll(object sender, EventArgs e)
@@ -201,7 +209,7 @@ namespace Multimedia_ImageProcessing
                 g.DrawImage(img, new Rectangle(0, 0, img.Width, img.Height), 0, 0, img.Width, img.Height, GraphicsUnit.Pixel, ia);
                 g.Dispose();
                 pictureBox1.Image = bmpInverted;
-                arrayImage[counter++] = pictureBox1.Image;
+                
 
 
             }
