@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,7 +15,6 @@ namespace Multimedia_ImageProcessing
         {
             // Có thể thêm logic khởi tạo nếu cần
         }
-
         public void RemoveBackground(string inputImage, string outputImage)
         {
             // Đường dẫn tới file Python trong thư mục project
@@ -52,10 +51,43 @@ namespace Multimedia_ImageProcessing
                     //}
                 }
             }
+
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
+        public void ChangeDoSang(string inputImage, string outputImage, int brightnessValue)
+        {
+            string pythonScript = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts", "chinhDoSang.py");
+
+            try
+            {
+                ProcessStartInfo psi = new ProcessStartInfo
+                {
+                    FileName = "python",
+                    Arguments = $"\"{pythonScript}\" \"{inputImage}\" {brightnessValue} \"{outputImage}\"", // Tham số truyền vào script
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using (Process process = Process.Start(psi))
+                {
+                    string output = process.StandardOutput.ReadToEnd();
+                    string error = process.StandardError.ReadToEnd();
+
+                    process.WaitForExit();
+
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+        }
+
     }
 }
