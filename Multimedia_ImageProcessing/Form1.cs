@@ -187,10 +187,17 @@ namespace Multimedia_ImageProcessing
             }
             else if (comboBox1.SelectedIndex == 1)
             {
-
-                if (tb_thongSo.Text != "") // Kiểm tra nếu có mục nào được chọn
+                int brightnessValue;
+                if (int.TryParse(tb_thongSo.Text, out brightnessValue)) // Kiểm tra nếu có mục nào được chọn
                 {
-                    int brightnessValue = Convert.ToInt32(tb_thongSo.Text);
+                    //int brightnessValue = Convert.ToInt32(tb_thongSo.Text);
+
+                    // Kiểm tra điều kiện độ sáng
+                    if (brightnessValue < -100 || brightnessValue > 100)
+                    {
+                        MessageBox.Show("Giá trị độ sáng phải nằm trong khoảng từ -100 đến 100.");
+                        return; // Thoát khỏi phương thức nếu điều kiện không hợp lệ
+                    }
 
                     string inputImage = openFileDialog.FileName;
 
@@ -208,12 +215,12 @@ namespace Multimedia_ImageProcessing
                     string outputImage = Path.Combine(outputFolder, "ChangedoSang.png");
 
                     // Nếu tệp đầu ra đã tồn tại, chuyển đường dẫn
-                    if (File.Exists(outputImage))
+                    int n = 0;
+                    do
                     {
-                        // Tạo đường dẫn mới cho tệp đầu ra
-                        string newOutputImage = Path.Combine(outputFolder, $"ChangedoSang_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.png");
-                        outputImage = newOutputImage;
-                    }
+                        n++; // Tăng giá trị n
+                        outputImage = Path.Combine(outputFolder, $"ChangedoSang_{brightnessValue + n}.png");
+                    } while (File.Exists(outputImage)); // Kiểm tra nếu tệp đã tồn tại
 
                     imP = new imageProcess();
                     // Gọi hàm xử lý
