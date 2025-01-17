@@ -38,12 +38,9 @@
             groupBox3 = new GroupBox();
             tb_thongSo = new TextBox();
             lbl_thongSo = new Label();
+            listBox1 = new ListBox();
             contrastTracker = new TrackBar();
             menuStrip1 = new MenuStrip();
-            tệpToolStripMenuItem = new ToolStripMenuItem();
-            openTSMI = new ToolStripMenuItem();
-            saveTSMI = new ToolStripMenuItem();
-            fomatTSMI = new ToolStripMenuItem();
             chỉnhSửaToolStripMenuItem = new ToolStripMenuItem();
             brightnessTSMI = new ToolStripMenuItem();
             blurTSMI = new ToolStripMenuItem();
@@ -65,7 +62,10 @@
             label5 = new Label();
             btn_redo = new Button();
             btn_undo = new Button();
-            listBox1 = new ListBox();
+            openTSMI = new ToolStripMenuItem();
+            saveTSMI = new ToolStripMenuItem();
+            fomatTSMI = new ToolStripMenuItem();
+            tệpToolStripMenuItem = new ToolStripMenuItem();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox2.SuspendLayout();
@@ -181,9 +181,10 @@
             // listBox1
             // 
             listBox1.FormattingEnabled = true;
+            listBox1.ItemHeight = 15;
             listBox1.Location = new Point(6, 50);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(161, 23);
+            listBox1.Size = new Size(161, 19);
             listBox1.TabIndex = 0;
             // 
             // contrastTracker
@@ -205,32 +206,6 @@
             menuStrip1.Size = new Size(1034, 24);
             menuStrip1.TabIndex = 3;
             menuStrip1.Text = "menuStrip1";
-            // 
-            // tệpToolStripMenuItem
-            // 
-            tệpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { openTSMI, saveTSMI, fomatTSMI });
-            tệpToolStripMenuItem.Name = "tệpToolStripMenuItem";
-            tệpToolStripMenuItem.Size = new Size(38, 20);
-            tệpToolStripMenuItem.Text = "Tệp";
-            // 
-            // openTSMI
-            // 
-            openTSMI.Name = "openTSMI";
-            openTSMI.Size = new Size(149, 22);
-            openTSMI.Text = "Mở";
-            openTSMI.Click += openTSMI_Click;
-            // 
-            // saveTSMI
-            // 
-            saveTSMI.Name = "saveTSMI";
-            saveTSMI.Size = new Size(149, 22);
-            saveTSMI.Text = "Lưu";
-            // 
-            // fomatTSMI
-            // 
-            fomatTSMI.Name = "fomatTSMI";
-            fomatTSMI.Size = new Size(149, 22);
-            fomatTSMI.Text = "Đổi định dạng";
             // 
             // chỉnhSửaToolStripMenuItem
             // 
@@ -381,6 +356,32 @@
             btn_undo.UseVisualStyleBackColor = true;
             btn_undo.Click += btn_undo_Click;
             // 
+            // openTSMI
+            // 
+            openTSMI.Name = "openTSMI";
+            openTSMI.Size = new Size(180, 22);
+            openTSMI.Text = "Mở";
+            openTSMI.Click += openTSMI_Click;
+            // 
+            // saveTSMI
+            // 
+            saveTSMI.Name = "saveTSMI";
+            saveTSMI.Size = new Size(180, 22);
+            saveTSMI.Text = "Lưu";
+            // 
+            // fomatTSMI
+            // 
+            fomatTSMI.Name = "fomatTSMI";
+            fomatTSMI.Size = new Size(180, 22);
+            fomatTSMI.Text = "Đổi định dạng";
+            // 
+            // tệpToolStripMenuItem
+            // 
+            tệpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { openTSMI, saveTSMI, fomatTSMI });
+            tệpToolStripMenuItem.Name = "tệpToolStripMenuItem";
+            tệpToolStripMenuItem.Size = new Size(38, 20);
+            tệpToolStripMenuItem.Text = "Tệp";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -400,6 +401,7 @@
             MainMenuStrip = menuStrip1;
             Name = "Form1";
             Text = "Trình chỉnh sửa ảnh ";
+            Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             groupBox2.ResumeLayout(false);
@@ -430,10 +432,6 @@
         private PictureBox pictureBox1;
         private TextBox tb_thongSo;
         private Label lbl_thongSo;
-        private ToolStripMenuItem tệpToolStripMenuItem;
-        private ToolStripMenuItem openTSMI;
-        private ToolStripMenuItem saveTSMI;
-        private ToolStripMenuItem fomatTSMI;
         private ToolStripMenuItem chỉnhSửaToolStripMenuItem;
         private ToolStripMenuItem brightnessTSMI;
         private ToolStripMenuItem blurTSMI;
@@ -452,7 +450,11 @@
         private TrackBar contrastTracker;
         private Button button1;
         private Button btn_redo;
-        private Button btn_undo; 
+        private Button btn_undo;
         private System.Windows.Forms.ListBox listBox1;
+        private ToolStripMenuItem tệpToolStripMenuItem;
+        private ToolStripMenuItem openTSMI;
+        private ToolStripMenuItem saveTSMI;
+        private ToolStripMenuItem fomatTSMI;
     }
 }

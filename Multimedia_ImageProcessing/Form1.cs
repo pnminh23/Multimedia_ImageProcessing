@@ -24,10 +24,13 @@ namespace Multimedia_ImageProcessing
             comboBox1.SelectedIndex = 0;
 
         }
-        public void appearChinhDoSang() {
-            lbl_thongSo.Visible = true; // Hiện Label
-            listBox1.Visible = true; // Hiện ListBox
-        }
+        //public void appearChinhDoSang()
+        //{
+        //    lbl_thongSo.Visible = true; // Hiện Label
+        //    listBox1.Visible = true; // Hiện ListBox
+        //    tb_thongSo.Visible = false;
+
+        //}
         public void appear()
         {
             lbl_thongSo.Visible = true;
@@ -46,6 +49,9 @@ namespace Multimedia_ImageProcessing
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
 
+
+                
+                
                 // Tải ảnh từ tệp và hiển thị lên PictureBox
                 Im = Image.FromFile(openFileDialog.FileName);
                 pictureBox1.Image = Im;
@@ -69,6 +75,8 @@ namespace Multimedia_ImageProcessing
                 //    lb_type.Text = "Không phải ảnh văn bản";
 
                 //}
+                // Kiểm tra và xóa các tệp
+                
             }
         }
 
@@ -76,17 +84,10 @@ namespace Multimedia_ImageProcessing
         {
             if (comboBox1.SelectedIndex == 1)
             {
-                lbl_thongSo.Text = "Độ sáng";
-                appearChinhDoSang(); // Gọi hàm để thực hiện các thao tác khác nếu cần
+                lbl_thongSo.Text = "Độ sáng (-100;100)";
+                /*appearChinhDoSang();*/ // Gọi hàm để thực hiện các thao tác khác nếu cần
+                appear();
 
-                // Xóa các mục hiện có trong ListBox
-                listBox1.Items.Clear();
-
-                // Thêm 201 số nguyên từ -100 đến 100 vào ListBox
-                for (int i = -100; i <= 100; i++)
-                {
-                    listBox1.Items.Add(i);
-                }
             }
             else if (comboBox1.SelectedIndex == 2)
             {
@@ -187,9 +188,9 @@ namespace Multimedia_ImageProcessing
             else if (comboBox1.SelectedIndex == 1)
             {
 
-                if (listBox1.SelectedIndex != -1) // Kiểm tra nếu có mục nào được chọn
+                if (tb_thongSo.Text != "") // Kiểm tra nếu có mục nào được chọn
                 {
-                    int brightnessValue = (int)listBox1.Items[listBox1.SelectedIndex]; // Lấy giá trị từ Items
+                    int brightnessValue = Convert.ToInt32(tb_thongSo.Text);
 
                     string inputImage = openFileDialog.FileName;
 
@@ -205,9 +206,19 @@ namespace Multimedia_ImageProcessing
 
                     // Đường dẫn file đầu ra
                     string outputImage = Path.Combine(outputFolder, "ChangedoSang.png");
+
+                    // Nếu tệp đầu ra đã tồn tại, chuyển đường dẫn
+                    if (File.Exists(outputImage))
+                    {
+                        // Tạo đường dẫn mới cho tệp đầu ra
+                        string newOutputImage = Path.Combine(outputFolder, $"ChangedoSang_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.png");
+                        outputImage = newOutputImage;
+                    }
+
                     imP = new imageProcess();
                     // Gọi hàm xử lý
                     imP.ChangeDoSang(inputImage, outputImage, brightnessValue);
+
                     // Hiển thị ảnh đã xử lý lên PictureBox
                     if (File.Exists(outputImage)) // Kiểm tra ảnh đã được tạo
                     {
@@ -223,7 +234,7 @@ namespace Multimedia_ImageProcessing
                 }
                 else
                 {
-                    MessageBox.Show("Vui lòng chọn một số từ ListBox.");
+                    MessageBox.Show("Vui lòng điền hệ số điều chỉnh độ sáng");
                 }
             }
             else if (comboBox1.SelectedIndex == 2)
@@ -395,22 +406,28 @@ namespace Multimedia_ImageProcessing
                 }
             }
         }
-        private int brightnessValue;
 
-        private void tb_thongSo_TextChanged(object sender, EventArgs e)
+        private void tb_thongSo_TextChanged_1(object sender, EventArgs e)
         {
-            if (int.TryParse(tb_thongSo.Text.Trim(), out int value) && value >= -100 && value <= 100)
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string outputFolder = Path.Combine(projectDirectory, "output");
+
+            // Kiểm tra và xóa các tệp
+            if (Directory.Exists(outputFolder))
             {
-                brightnessValue = value; // Lưu giá trị độ sáng
-            }
-            else
-            {
-                // Xử lý trường hợp nhập không hợp lệ
-                MessageBox.Show("Vui lòng nhập giá trị độ sáng hợp lệ từ -100 đến 100.");
+                foreach (var file in Directory.GetFiles(outputFolder, "ChangedoSang*.png"))
+                {
+                    File.Delete(file);
+                }
             }
         }
 
-        private void tb_thongSo_TextChanged_1(object sender, EventArgs e)
+        private void tệpToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
