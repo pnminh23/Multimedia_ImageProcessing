@@ -244,6 +244,7 @@ namespace Multimedia_ImageProcessing
                     MessageBox.Show("Vui lòng điền hệ số điều chỉnh độ sáng");
                 }
             }
+            //chỉnh độ mờ
             else if (comboBox1.SelectedIndex == 2)
             {
             }
@@ -357,62 +358,8 @@ namespace Multimedia_ImageProcessing
             }
         }
 
-        private void saveTSMI_Click_1(object sender, EventArgs e)
-        {
-            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
-            {
-                // Thiết lập bộ lọc cho định dạng tệp
-                saveFileDialog.Filter = "JPEG Image|*.jpg|PNG Image|*.png|Bitmap Image|*.bmp|GIF Image|*.gif";
-                saveFileDialog.Title = "Save an Image";
-
-                // Hiển thị hộp thoại và kiểm tra nếu người dùng nhấn nút Lưu
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        // Kiểm tra nếu có ảnh trong PictureBox
-                        if (pictureBox1.Image != null)
-                        {
-                            // Lưu ảnh theo định dạng được chọn
-                            string extension = Path.GetExtension(saveFileDialog.FileName).ToLower();
-                            System.Drawing.Imaging.ImageFormat format;
-
-                            switch (extension)
-                            {
-                                case ".jpg":
-                                case ".jpeg":
-                                    format = System.Drawing.Imaging.ImageFormat.Jpeg;
-                                    break;
-                                case ".png":
-                                    format = System.Drawing.Imaging.ImageFormat.Png;
-                                    break;
-                                case ".bmp":
-                                    format = System.Drawing.Imaging.ImageFormat.Bmp;
-                                    break;
-                                case ".gif":
-                                    format = System.Drawing.Imaging.ImageFormat.Gif;
-                                    break;
-                                default:
-                                    MessageBox.Show("Định dạng tệp không hợp lệ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    return;
-                            }
-
-                            // Lưu ảnh
-                            pictureBox1.Image.Save(saveFileDialog.FileName, format);
-                            MessageBox.Show("Ảnh đã được lưu thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Không có ảnh nào để lưu.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Lỗi khi lưu ảnh: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-        }
+        
+        
 
         private void tb_thongSo_TextChanged_1(object sender, EventArgs e)
         {
