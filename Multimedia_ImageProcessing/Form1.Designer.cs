@@ -36,6 +36,9 @@
             label3 = new Label();
             label2 = new Label();
             groupBox3 = new GroupBox();
+            comboBox3 = new ComboBox();
+            comboBox2 = new ComboBox();
+            tb_thongSo = new TextBox();
             lbl_thongSo = new Label();
             contrastTracker = new TrackBar();
             menuStrip1 = new MenuStrip();
@@ -64,7 +67,8 @@
             label5 = new Label();
             btn_redo = new Button();
             btn_undo = new Button();
-            tb_thongSo = new TextBox();
+            label6 = new Label();
+            label7 = new Label();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox2.SuspendLayout();
@@ -149,6 +153,10 @@
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(label7);
+            groupBox3.Controls.Add(label6);
+            groupBox3.Controls.Add(comboBox3);
+            groupBox3.Controls.Add(comboBox2);
             groupBox3.Controls.Add(tb_thongSo);
             groupBox3.Controls.Add(lbl_thongSo);
             groupBox3.Controls.Add(contrastTracker);
@@ -159,6 +167,36 @@
             groupBox3.TabStop = false;
             groupBox3.Text = "Tuỳ chỉnh";
             groupBox3.Enter += groupBox3_Enter;
+            // 
+            // comboBox3
+            // 
+            comboBox3.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox3.FormattingEnabled = true;
+            comboBox3.Items.AddRange(new object[] { "Chọn kích cỡ khung", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 });
+            comboBox3.Location = new Point(6, 152);
+            comboBox3.Name = "comboBox3";
+            comboBox3.Size = new Size(161, 23);
+            comboBox3.TabIndex = 12;
+            comboBox3.SelectedIndexChanged += comboBox3_SelectedIndexChanged;
+            // 
+            // comboBox2
+            // 
+            comboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox2.FormattingEnabled = true;
+            comboBox2.Items.AddRange(new object[] { "Chọn màu", "black", "white", "red", "green", "blue", "yellow", "cyan", "magenta" });
+            comboBox2.Location = new Point(6, 101);
+            comboBox2.Name = "comboBox2";
+            comboBox2.Size = new Size(161, 23);
+            comboBox2.TabIndex = 11;
+            comboBox2.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
+            // 
+            // tb_thongSo
+            // 
+            tb_thongSo.Location = new Point(6, 50);
+            tb_thongSo.Name = "tb_thongSo";
+            tb_thongSo.Size = new Size(161, 23);
+            tb_thongSo.TabIndex = 10;
+            tb_thongSo.TextChanged += tb_thongSo_TextChanged_1;
             // 
             // lbl_thongSo
             // 
@@ -199,25 +237,21 @@
             // openTSMI
             // 
             openTSMI.Name = "openTSMI";
-            openTSMI.Size = new Size(180, 22);
+            openTSMI.Size = new Size(149, 22);
             openTSMI.Text = "Mở";
             openTSMI.Click += openTSMI_Click;
             // 
             // saveTSMI
             // 
             saveTSMI.Name = "saveTSMI";
-            saveTSMI.Size = new Size(180, 22);
+            saveTSMI.Size = new Size(149, 22);
             saveTSMI.Text = "Lưu";
-
-
-
             saveTSMI.Click += saveTSMI_Click;
-
             // 
             // fomatTSMI
             // 
             fomatTSMI.Name = "fomatTSMI";
-            fomatTSMI.Size = new Size(180, 22);
+            fomatTSMI.Size = new Size(149, 22);
             fomatTSMI.Text = "Đổi định dạng";
             // 
             // chỉnhSửaToolStripMenuItem
@@ -369,13 +403,25 @@
             btn_undo.UseVisualStyleBackColor = true;
             btn_undo.Click += btn_undo_Click;
             // 
-            // tb_thongSo
+            // label6
             // 
-            tb_thongSo.Location = new Point(6, 50);
-            tb_thongSo.Name = "tb_thongSo";
-            tb_thongSo.Size = new Size(161, 23);
-            tb_thongSo.TabIndex = 10;
-            tb_thongSo.TextChanged += tb_thongSo_TextChanged_1;
+            label6.AutoSize = true;
+            label6.Location = new Point(9, 83);
+            label6.Name = "label6";
+            label6.Size = new Size(56, 15);
+            label6.TabIndex = 13;
+            label6.Text = "Chọn màu";
+            label6.Click += label6_Click;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(9, 134);
+            label7.Name = "label7";
+            label7.Size = new Size(56, 15);
+            label7.TabIndex = 14;
+            label7.Text = "Chọn kích cỡ khung";
+            label7.Click += label7_Click;
             // 
             // Form1
             // 
@@ -444,13 +490,15 @@
         private TrackBar contrastTracker;
         private Button button1;
         private Button btn_redo;
-        private Button btn_undo; 
-        private System.Windows.Forms.ListBox listBox1;
+        private Button btn_undo;
         private ToolStripMenuItem tệpToolStripMenuItem;
         private ToolStripMenuItem openTSMI;
         private ToolStripMenuItem saveTSMI;
         private ToolStripMenuItem fomatTSMI;
         private TextBox tb_thongSo;
-
+        private ComboBox comboBox3;
+        private ComboBox comboBox2;
+        private Label label6;
+        private Label label7;
     }
 }
