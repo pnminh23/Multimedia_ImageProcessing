@@ -84,14 +84,14 @@ namespace Multimedia_ImageProcessing
         {
             if (comboBox1.SelectedIndex == 1)
             {
-                lbl_thongSo.Text = "Độ sáng (-100;100)";
+                lbl_thongSo.Text = "Độ sáng [-100;100]";
                 /*appearChinhDoSang();*/ // Gọi hàm để thực hiện các thao tác khác nếu cần
                 appear();
 
             }
             else if (comboBox1.SelectedIndex == 2)
             {
-                lbl_thongSo.Text = "Độ mờ";
+                lbl_thongSo.Text = "Độ mờ lẻ [1;31]";
                 appear();
 
             }
@@ -247,6 +247,62 @@ namespace Multimedia_ImageProcessing
             //chỉnh độ mờ
             else if (comboBox1.SelectedIndex == 2)
             {
+                int blurValue;
+                if (int.TryParse(tb_thongSo.Text, out blurValue)) // Kiểm tra nếu có mục nào được chọn
+                {
+                    //int brightnessValue = Convert.ToInt32(tb_thongSo.Text);
+
+                    // Kiểm tra điều kiện độ mờ
+                    if (blurValue < 1 || blurValue > 31|| blurValue%2==0)
+                    {
+                        MessageBox.Show("Giá trị độ mờ phải nằm trong khoảng từ 1 đến 31 và phải là số lẻ.");
+                        return; // Thoát khỏi phương thức nếu điều kiện không hợp lệ
+                    }
+
+                    string inputImage = openFileDialog.FileName;
+
+                    // Lấy đường dẫn thư mục `output` trong dự án
+                    string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                    string outputFolder = Path.Combine(projectDirectory, "output");
+
+                    // Tạo thư mục `output` nếu chưa tồn tại
+                    if (!Directory.Exists(outputFolder))
+                    {
+                        Directory.CreateDirectory(outputFolder);
+                    }
+
+                    // Đường dẫn file đầu ra
+                    string outputImage = Path.Combine(outputFolder, "ChangedoMo.png");
+
+                    // Nếu tệp đầu ra đã tồn tại, chuyển đường dẫn
+                    int n = 0;
+                    do
+                    {
+                        n++; // Tăng giá trị n
+                        outputImage = Path.Combine(outputFolder, $"ChangedoMo_{blurValue + n}.png");
+                    } while (File.Exists(outputImage)); // Kiểm tra nếu tệp đã tồn tại
+
+                    imP = new imageProcess();
+                    // Gọi hàm xử lý
+                    imP.lamMo(inputImage, outputImage, blurValue);
+
+                    // Hiển thị ảnh đã xử lý lên PictureBox
+                    if (File.Exists(outputImage)) // Kiểm tra ảnh đã được tạo
+                    {
+                        pictureBox1.Image = new Bitmap(outputImage);
+                        arrayImage[counter++] = pictureBox1.Image;
+
+                        // MessageBox.Show("Ảnh đã được xử lý và hiển thị!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không thể tìm thấy ảnh đã xử lý.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Vui lòng điền hệ số điều chỉnh độ mờ");
+                }
             }
             else if (comboBox1.SelectedIndex == 3)
             {
@@ -374,7 +430,8 @@ namespace Multimedia_ImageProcessing
             // Kiểm tra và xóa các tệp
             if (Directory.Exists(outputFolder))
             {
-                foreach (var file in Directory.GetFiles(outputFolder, "ChangedoSang*.png"))
+                //foreach (var file in Directory.GetFiles(outputFolder, "ChangedoSang*.png"))
+                foreach (var file in Directory.GetFiles(outputFolder, "Change*.png"))
                 {
                     File.Delete(file);
                 }
