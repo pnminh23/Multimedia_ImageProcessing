@@ -33,8 +33,10 @@ namespace Multimedia_ImageProcessing
         //}
         public void appear()
         {
+            btn_apDung.Visible = true;
             lbl_thongSo.Visible = true;
             tb_thongSo.Visible = true;
+            contrastTracker.Visible = false;
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -104,10 +106,15 @@ namespace Multimedia_ImageProcessing
             else if (comboBox1.SelectedIndex == 4)
             {
                 lbl_thongSo.Text = "Điều chỉnh thông số";
+                contrastTracker.Visible = true;
+
                 lbl_thongSo.Visible = true;
                 tb_thongSo.Visible = false;
-                contrastTracker.Visible = true;
+                
                 btn_apDung.Visible = false;
+                
+
+
 
             }
             else if (comboBox1.SelectedIndex == 5)
@@ -253,7 +260,7 @@ namespace Multimedia_ImageProcessing
                     //int brightnessValue = Convert.ToInt32(tb_thongSo.Text);
 
                     // Kiểm tra điều kiện độ mờ
-                    if (blurValue < 1 || blurValue > 31|| blurValue%2==0)
+                    if (blurValue < 1 || blurValue > 31 || blurValue % 2 == 0)
                     {
                         MessageBox.Show("Giá trị độ mờ phải nằm trong khoảng từ 1 đến 31 và phải là số lẻ.");
                         return; // Thoát khỏi phương thức nếu điều kiện không hợp lệ
@@ -414,12 +421,12 @@ namespace Multimedia_ImageProcessing
             }
         }
 
-        
-        
+
+
 
         private void tb_thongSo_TextChanged_1(object sender, EventArgs e)
         {
-
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -498,6 +505,11 @@ namespace Multimedia_ImageProcessing
                     }
                 }
             }
+        }
+
+        private void groupBox3_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }
