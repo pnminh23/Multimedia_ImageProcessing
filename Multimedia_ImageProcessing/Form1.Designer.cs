@@ -1,4 +1,4 @@
-namespace Multimedia_ImageProcessing
+﻿namespace Multimedia_ImageProcessing
 {
     partial class Form1
     {
@@ -36,7 +36,6 @@ namespace Multimedia_ImageProcessing
             label3 = new Label();
             label2 = new Label();
             groupBox3 = new GroupBox();
-            tb_thongSo = new TextBox();
             lbl_thongSo = new Label();
             listBox1 = new ListBox();
             contrastTracker = new TrackBar();
@@ -66,6 +65,7 @@ namespace Multimedia_ImageProcessing
             label5 = new Label();
             btn_redo = new Button();
             btn_undo = new Button();
+            tb_thongSo = new TextBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox2.SuspendLayout();
@@ -160,14 +160,7 @@ namespace Multimedia_ImageProcessing
             groupBox3.TabIndex = 2;
             groupBox3.TabStop = false;
             groupBox3.Text = "Tuỳ chỉnh";
-            // 
-            // tb_thongSo
-            // 
-            tb_thongSo.Location = new Point(6, 50);
-            tb_thongSo.Name = "tb_thongSo";
-            tb_thongSo.Size = new Size(161, 23);
-            tb_thongSo.TabIndex = 10;
-            tb_thongSo.TextChanged += tb_thongSo_TextChanged_1;
+            groupBox3.Enter += groupBox3_Enter;
             // 
             // lbl_thongSo
             // 
@@ -226,6 +219,7 @@ namespace Multimedia_ImageProcessing
             saveTSMI.Name = "saveTSMI";
             saveTSMI.Size = new Size(149, 22);
             saveTSMI.Text = "Lưu";
+            saveTSMI.Click += saveTSMI_Click;
             // 
             // fomatTSMI
             // 
@@ -382,6 +376,14 @@ namespace Multimedia_ImageProcessing
             btn_undo.UseVisualStyleBackColor = true;
             btn_undo.Click += btn_undo_Click;
             // 
+            // tb_thongSo
+            // 
+            tb_thongSo.Location = new Point(6, 50);
+            tb_thongSo.Name = "tb_thongSo";
+            tb_thongSo.Size = new Size(161, 23);
+            tb_thongSo.TabIndex = 10;
+            tb_thongSo.TextChanged += tb_thongSo_TextChanged_1;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -430,12 +432,7 @@ namespace Multimedia_ImageProcessing
         private ComboBox comboBox1;
         private Label label5;
         private PictureBox pictureBox1;
-        private TextBox tb_thongSo;
         private Label lbl_thongSo;
-        private ToolStripMenuItem tệpToolStripMenuItem;
-        private ToolStripMenuItem openTSMI;
-        private ToolStripMenuItem saveTSMI;
-        private ToolStripMenuItem fomatTSMI;
         private ToolStripMenuItem chỉnhSửaToolStripMenuItem;
         private ToolStripMenuItem brightnessTSMI;
         private ToolStripMenuItem blurTSMI;
@@ -454,7 +451,12 @@ namespace Multimedia_ImageProcessing
         private TrackBar contrastTracker;
         private Button button1;
         private Button btn_redo;
-        private Button btn_undo; 
+        private Button btn_undo;
         private System.Windows.Forms.ListBox listBox1;
+        private ToolStripMenuItem tệpToolStripMenuItem;
+        private ToolStripMenuItem openTSMI;
+        private ToolStripMenuItem saveTSMI;
+        private ToolStripMenuItem fomatTSMI;
+        private TextBox tb_thongSo;
     }
 }
