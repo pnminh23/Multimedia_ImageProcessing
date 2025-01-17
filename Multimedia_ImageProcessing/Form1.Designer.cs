@@ -41,6 +41,10 @@
             listBox1 = new ListBox();
             contrastTracker = new TrackBar();
             menuStrip1 = new MenuStrip();
+            tệpToolStripMenuItem = new ToolStripMenuItem();
+            openTSMI = new ToolStripMenuItem();
+            saveTSMI = new ToolStripMenuItem();
+            fomatTSMI = new ToolStripMenuItem();
             chỉnhSửaToolStripMenuItem = new ToolStripMenuItem();
             brightnessTSMI = new ToolStripMenuItem();
             blurTSMI = new ToolStripMenuItem();
@@ -62,10 +66,6 @@
             label5 = new Label();
             btn_redo = new Button();
             btn_undo = new Button();
-            openTSMI = new ToolStripMenuItem();
-            saveTSMI = new ToolStripMenuItem();
-            fomatTSMI = new ToolStripMenuItem();
-            tệpToolStripMenuItem = new ToolStripMenuItem();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox2.SuspendLayout();
@@ -206,6 +206,33 @@
             menuStrip1.Size = new Size(1034, 24);
             menuStrip1.TabIndex = 3;
             menuStrip1.Text = "menuStrip1";
+            // 
+            // tệpToolStripMenuItem
+            // 
+            tệpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { openTSMI, saveTSMI, fomatTSMI });
+            tệpToolStripMenuItem.Name = "tệpToolStripMenuItem";
+            tệpToolStripMenuItem.Size = new Size(38, 20);
+            tệpToolStripMenuItem.Text = "Tệp";
+            // 
+            // openTSMI
+            // 
+            openTSMI.Name = "openTSMI";
+            openTSMI.Size = new Size(180, 22);
+            openTSMI.Text = "Mở";
+            openTSMI.Click += openTSMI_Click;
+            // 
+            // saveTSMI
+            // 
+            saveTSMI.Name = "saveTSMI";
+            saveTSMI.Size = new Size(180, 22);
+            saveTSMI.Text = "Lưu";
+            saveTSMI.Click += saveTSMI_Click;
+            // 
+            // fomatTSMI
+            // 
+            fomatTSMI.Name = "fomatTSMI";
+            fomatTSMI.Size = new Size(180, 22);
+            fomatTSMI.Text = "Đổi định dạng";
             // 
             // chỉnhSửaToolStripMenuItem
             // 
@@ -355,32 +382,6 @@
             btn_undo.Text = "<<";
             btn_undo.UseVisualStyleBackColor = true;
             btn_undo.Click += btn_undo_Click;
-            // 
-            // openTSMI
-            // 
-            openTSMI.Name = "openTSMI";
-            openTSMI.Size = new Size(180, 22);
-            openTSMI.Text = "Mở";
-            openTSMI.Click += openTSMI_Click;
-            // 
-            // saveTSMI
-            // 
-            saveTSMI.Name = "saveTSMI";
-            saveTSMI.Size = new Size(180, 22);
-            saveTSMI.Text = "Lưu";
-            // 
-            // fomatTSMI
-            // 
-            fomatTSMI.Name = "fomatTSMI";
-            fomatTSMI.Size = new Size(180, 22);
-            fomatTSMI.Text = "Đổi định dạng";
-            // 
-            // tệpToolStripMenuItem
-            // 
-            tệpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { openTSMI, saveTSMI, fomatTSMI });
-            tệpToolStripMenuItem.Name = "tệpToolStripMenuItem";
-            tệpToolStripMenuItem.Size = new Size(38, 20);
-            tệpToolStripMenuItem.Text = "Tệp";
             // 
             // Form1
             // 
