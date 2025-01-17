@@ -35,6 +35,7 @@ namespace Multimedia_ImageProcessing
         {
             lbl_thongSo.Visible = true;
             tb_thongSo.Visible = true;
+            contrastTracker.Visible = false;
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -401,5 +402,7 @@ namespace Multimedia_ImageProcessing
         {
 
         }
+
+       
     }
 }
