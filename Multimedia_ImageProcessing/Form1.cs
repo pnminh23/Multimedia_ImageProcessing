@@ -99,7 +99,7 @@ namespace Multimedia_ImageProcessing
             }
             else if (comboBox1.SelectedIndex == 3)
             {
-                lbl_thongSo.Text = "Hệ số bão hoà";
+                lbl_thongSo.Text = "Hệ số bão hoà [-255;255]";
                 appear();
 
             }
@@ -318,6 +318,62 @@ namespace Multimedia_ImageProcessing
             }
             else if (comboBox1.SelectedIndex == 3)
             {
+                int colorValue;
+                if (int.TryParse(tb_thongSo.Text, out colorValue)) // Kiểm tra nếu có mục nào được chọn
+                {
+                    //int brightnessValue = Convert.ToInt32(tb_thongSo.Text);
+
+                    // Kiểm tra điều kiện độ màu
+                    if (colorValue < -255 || colorValue > 255)
+                    {
+                        MessageBox.Show("Giá trị độ màu phải nằm trong khoảng từ -255 đến 255.");
+                        return; // Thoát khỏi phương thức nếu điều kiện không hợp lệ
+                    }
+
+                    string inputImage = openFileDialog.FileName;
+
+                    // Lấy đường dẫn thư mục `output` trong dự án
+                    string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                    string outputFolder = Path.Combine(projectDirectory, "output");
+
+                    // Tạo thư mục `output` nếu chưa tồn tại
+                    if (!Directory.Exists(outputFolder))
+                    {
+                        Directory.CreateDirectory(outputFolder);
+                    }
+
+                    // Đường dẫn file đầu ra
+                    string outputImage = Path.Combine(outputFolder, "ChangedoMau.png");
+
+                    // Nếu tệp đầu ra đã tồn tại, chuyển đường dẫn
+                    int n = 0;
+                    do
+                    {
+                        n++; // Tăng giá trị n
+                        outputImage = Path.Combine(outputFolder, $"ChangedoMau_{colorValue + n}.png");
+                    } while (File.Exists(outputImage)); // Kiểm tra nếu tệp đã tồn tại
+
+                    imP = new imageProcess();
+                    // Gọi hàm xử lý
+                    imP.thayDoiDoMau(inputImage, outputImage, colorValue);
+
+                    // Hiển thị ảnh đã xử lý lên PictureBox
+                    if (File.Exists(outputImage)) // Kiểm tra ảnh đã được tạo
+                    {
+                        pictureBox1.Image = new Bitmap(outputImage);
+                        arrayImage[counter++] = pictureBox1.Image;
+
+                        // MessageBox.Show("Ảnh đã được xử lý và hiển thị!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không thể tìm thấy ảnh đã xử lý.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Vui lòng điền hệ số điều chỉnh độ màu");
+                }
             }
             // minh
             else if (comboBox1.SelectedIndex == 4)
