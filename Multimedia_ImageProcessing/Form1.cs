@@ -112,9 +112,14 @@ namespace Multimedia_ImageProcessing
                 tb_thongSo.Visible = false;
                 
                 btn_apDung.Visible = false;
-                
 
 
+                // Đặt tọa độ mới cho thanh kéo// Đặt khoảng cách mong muốn từ TextBox xuống thanh kéo
+                int distanceFromTextBox = 20; // Khoảng cách bạn muốn
+
+                // Đặt vị trí cho contrastTracker dưới TextBox
+                contrastTracker.Location = new Point(tb_thongSo.Location.X, 
+                    tb_thongSo.Location.Y + tb_thongSo.Height + distanceFromTextBox);
 
             }
             else if (comboBox1.SelectedIndex == 5)
