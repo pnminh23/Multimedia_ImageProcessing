@@ -1,4 +1,4 @@
-﻿using System.Data;
+﻿﻿using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
@@ -7,6 +7,7 @@ namespace Multimedia_ImageProcessing
 {
     public partial class Form1 : Form
     {
+        private string a1,a2;
         private Bitmap bitmap;
         Image Im;
         Image[] arrayImage = new Image[50000];
@@ -24,7 +25,6 @@ namespace Multimedia_ImageProcessing
             comboBox1.SelectedIndex = 0;
             btn_rotateX.Visible = false;
             btn_rotateY.Visible = false;
-
         }
         //public void appearChinhDoSang()
         //{
@@ -44,6 +44,34 @@ namespace Multimedia_ImageProcessing
             comboBox2.Visible = false;
             comboBox3.Visible = false;
             btn_apDung.Enabled = true;
+
+        }
+        public void ghepAnh()
+        {
+            tb_thongSo.Visible = false;
+            button1.Visible = true;
+            button2.Visible = true;
+            textBox1.Visible = true;
+            textBox2.Visible = true;
+            textBox1.ReadOnly = true;
+            textBox2.ReadOnly = true;
+            comboBox4.Visible = true;
+            comboBox4.SelectedIndex = 0;
+            openTSMI.Enabled = false;
+            btn_apDung.Enabled = true;
+            btn_apDung.Visible= true;
+        }
+
+        public void koghepAnh()
+        {
+            textBox1.Text = "";
+            textBox2.Text = "";
+            comboBox4.Visible = false;
+            button1.Visible = false;
+            button2.Visible = false;
+            textBox1.Visible = false;
+            textBox2.Visible = false;
+            openTSMI.Enabled = true;
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -96,22 +124,23 @@ namespace Multimedia_ImageProcessing
                 lbl_thongSo.Text = "Độ sáng [-100;100]";
                 /*appearChinhDoSang();*/ // Gọi hàm để thực hiện các thao tác khác nếu cần
                 appear();
-
+                koghepAnh();
             }
             else if (comboBox1.SelectedIndex == 2)
             {
                 lbl_thongSo.Text = "Độ mờ lẻ [1;31]";
                 appear();
-
+                koghepAnh();
             }
             else if (comboBox1.SelectedIndex == 3)
             {
                 lbl_thongSo.Text = "Hệ số bão hoà [-255;255]";
                 appear();
-
+                koghepAnh();
             }
             else if (comboBox1.SelectedIndex == 4)
             {
+                koghepAnh();
                 lbl_thongSo.Text = "Điều chỉnh thông số";
                 contrastTracker.Visible = true;
 
@@ -120,7 +149,8 @@ namespace Multimedia_ImageProcessing
 
                 btn_apDung.Visible = false;
 
-
+                btn_rotateX.Visible = false;
+                btn_rotateY.Visible = false;
                 // Đặt tọa độ mới cho thanh kéo// Đặt khoảng cách mong muốn từ TextBox xuống thanh kéo
                 int distanceFromTextBox = 15; // Khoảng cách bạn muốn
 
@@ -135,20 +165,22 @@ namespace Multimedia_ImageProcessing
                 lbl_thongSo.Visible = false;
                 tb_thongSo.Visible = false;
                 contrastTracker.Visible = false;
-                btn_apDung.Visible = true;
-
+                btn_apDung.Enabled = true;
+                koghepAnh();
+                btn_rotateX.Visible = false;
+                btn_rotateY.Visible = false;
             }
             else if (comboBox1.SelectedIndex == 6)
             {
                 lbl_thongSo.Text = "Ghép ảnh";
-                appear();
-
+                //appear();
+                ghepAnh();
             }
             else if (comboBox1.SelectedIndex == 7)
             {
                 lbl_thongSo.Text = "Góc xoay";
                 appear();
-
+                koghepAnh();
             }
             else if (comboBox1.SelectedIndex == 8)
             {
@@ -157,11 +189,17 @@ namespace Multimedia_ImageProcessing
                 btn_rotateY.Visible = true;
                 tb_thongSo.Visible = false;
                 contrastTracker.Visible = false;
-
+                label6.Visible = false;
+                label7.Visible = false;
+                comboBox2.Visible = false;
+                comboBox3.Visible = false;
+                koghepAnh();
             }
             else if (comboBox1.SelectedIndex == 9)
             {
                 lbl_thongSo.Text = "Thêm khung ảnh";
+                btn_rotateX.Visible = false;
+                btn_rotateY.Visible = false;
                 btn_apDung.Visible = true;
                 lbl_thongSo.Visible = true;
                 contrastTracker.Visible = false;
@@ -173,22 +211,27 @@ namespace Multimedia_ImageProcessing
                 tb_thongSo.Visible = false;
                 label6.Visible = true;
                 label7.Visible = true;
+                koghepAnh();
             }
             else if (comboBox1.SelectedIndex == 10)
             {
                 lbl_thongSo.Text = "Cắt ảnh";
                 appear();
-
+                koghepAnh();
             }
 
             else if (comboBox1.SelectedIndex == 11)
             {
                 lbl_thongSo.Text = "Lấy biên ảnh bằng phương pháp sobel";
                 lbl_thongSo.Visible = true;
+                tb_thongSo.Visible = true;
+                koghepAnh();
+                contrastTracker.Visible = false;
             }
-
             else
             {
+                btn_rotateX.Visible = false;
+                btn_rotateY.Visible = false;
                 label6.Visible = false;
                 label7.Visible = false;
                 btn_apDung.Enabled = false;
@@ -197,7 +240,7 @@ namespace Multimedia_ImageProcessing
                 contrastTracker.Visible = false;
                 comboBox2.Visible = false;
                 comboBox3.Visible = false;
-
+                koghepAnh();
             }
         }
 
@@ -419,6 +462,87 @@ namespace Multimedia_ImageProcessing
             }
             else if (comboBox1.SelectedIndex == 6)
             {
+                if (textBox1.Text != textBox2.Text&& comboBox4.SelectedItem.ToString()!="Chọn loại ghép")
+                {
+
+                    string kieu="";
+                    try
+                    {
+
+                        if (comboBox4.SelectedItem.ToString() == "ảnh 1 trái ảnh 2 phải")
+                        {
+                            kieu = "a1ta2";
+                        }
+                        if (comboBox4.SelectedItem.ToString() == "ảnh 1 trên ảnh 2 dưới")
+                        {
+                            kieu = "a1da2";
+                        }
+                        if (comboBox4.SelectedItem.ToString() == "ảnh 2 trên ảnh 1 dưới")
+                        {
+                            kieu = "a2da1";
+                        }
+                        if (comboBox4.SelectedItem.ToString() == "ảnh 2 trái ảnh 1 phải")
+                        {
+                            kieu = "a2ta1";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Đã xảy ra lỗi khi ghép ảnh: {ex.Message}");
+                    }
+                    string pic1 = a1;
+
+                    string pic2 = a2;
+
+                    if (!File.Exists(pic1) || !File.Exists(pic2))
+                    {
+                        MessageBox.Show("Một hoặc cả hai tệp hình ảnh không tồn tại.");
+                        return;
+                    }
+                    // Lấy đường dẫn thư mục `output` trong dự án
+                    string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                    string outputFolder = Path.Combine(projectDirectory, "output");
+
+                    // Tạo thư mục `output` nếu chưa tồn tại
+                    if (!Directory.Exists(outputFolder))
+                    {
+                        Directory.CreateDirectory(outputFolder);
+                    }
+
+                    // Đường dẫn file đầu ra
+                    string output1 = Path.Combine(outputFolder, "ChangeGhep.jpg");
+
+                    // Nếu tệp đầu ra đã tồn tại, chuyển đường dẫn
+                    int n = 0;
+                    do
+                    {
+                        n++; // Tăng giá trị n
+                        output1 = Path.Combine(outputFolder, $"ChangeGhep_{n}.jpg");
+                    } while (File.Exists(output1)); // Kiểm tra nếu tệp đã tồn tại
+
+                    imP = new imageProcess();
+                    // Gọi hàm xử lý
+                    imP.ghepAnh(pic1, pic2, output1, kieu);
+
+                    // Hiển thị ảnh đã xử lý lên PictureBox
+                    if (File.Exists(output1)) // Kiểm tra ảnh đã được tạo
+                    {
+                        pictureBox1.Image = new Bitmap(output1);
+                        arrayImage[counter++] = pictureBox1.Image;
+
+                        // MessageBox.Show("Ảnh đã được xử lý và hiển thị!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không thể tìm thấy ảnh đã xử lý.");
+                    }
+                    
+                }
+                else
+                {//ẩn nút áp dụng 
+                    MessageBox.Show("Vui lòng thử lại.");
+                    return;
+                }
             }
             else if (comboBox1.SelectedIndex == 7)
             {
@@ -487,7 +611,7 @@ namespace Multimedia_ImageProcessing
                 if (comboBox2.SelectedItem.ToString() != "Chọn màu" &&
                     comboBox3.SelectedItem.ToString() != "Chọn kích cỡ khung")
                 {
-                    
+
                     string tenMau = comboBox2.SelectedItem.ToString();
 
                     string inputImage = openFileDialog.FileName;
@@ -668,6 +792,10 @@ namespace Multimedia_ImageProcessing
                 {
                     File.Delete(file);
                 }
+                foreach (var file in Directory.GetFiles(outputFolder, "Change*.jpg"))
+                {
+                    File.Delete(file);
+                }
             }
         }
 
@@ -806,12 +934,69 @@ namespace Multimedia_ImageProcessing
                 MessageBox.Show("At first Open An Image", "File not Opened ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-
         }
+
         private void label7_Click(object sender, EventArgs e)
         {
 
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+         
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                // Cài đặt bộ lọc để chỉ cho phép chọn các tệp hình ảnh
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
+                openFileDialog.Title = "Chọn ảnh";
+
+                // Kiểm tra nếu người dùng đã chọn một tệp
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Lấy tên tệp và hiển thị vào TextBox
+                    string fileName = openFileDialog.FileName;
+                    a1 = fileName;
+                    textBox1.Text = Path.GetFileName(fileName); // Hoặc chỉ hiển thị tên tệp: Path.GetFileName(fileName);
+                }
+            }
+        }
+        
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                // Cài đặt bộ lọc để chỉ cho phép chọn các tệp hình ảnh
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
+                openFileDialog.Title = "Chọn ảnh";
+
+                // Kiểm tra nếu người dùng đã chọn một tệp
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Lấy tên tệp và hiển thị vào TextBox
+                    
+                    string fileName = openFileDialog.FileName;
+                    a2 = fileName;
+                    textBox2.Text = Path.GetFileName(fileName); // Hoặc chỉ hiển thị tên tệp: Path.GetFileName(fileName);
+                }
+            }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tệpToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
