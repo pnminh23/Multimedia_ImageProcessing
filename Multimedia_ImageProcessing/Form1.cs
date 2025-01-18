@@ -1041,7 +1041,6 @@ namespace Multimedia_ImageProcessing
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 // Cài đặt bộ lọc để chỉ cho phép chọn các tệp hình ảnh
@@ -1051,11 +1050,43 @@ namespace Multimedia_ImageProcessing
                 // Kiểm tra nếu người dùng đã chọn một tệp
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    // Lấy tên tệp và hiển thị vào TextBox
+                    // Lấy tên tệp
                     string fileName = openFileDialog.FileName;
-                    a1 = fileName;
-                    textBox1.Text = Path.GetFileName(fileName); // Hoặc chỉ hiển thị tên tệp: Path.GetFileName(fileName);
-                    //textBox1.Text = a1;
+                    string newFileName = Path.GetFileName(fileName);
+                    string newDirectory = @"D:\picvn"; // Đường dẫn lưu ảnh mới
+                    string extension = Path.GetExtension(fileName);
+                    int counter = 1;
+
+                    // Kiểm tra xem tên tệp có dấu tiếng Việt hoặc dấu cách không
+                    if (fileName.Any(c => c > 127 || char.IsWhiteSpace(c)))
+                    {
+                        // Tạo thư mục nếu chưa tồn tại
+                        if (!Directory.Exists(newDirectory))
+                        {
+                            Directory.CreateDirectory(newDirectory);
+                        }
+
+                        // Tạo tên file mới
+                        string newFilePath;
+                        do
+                        {
+                            newFilePath = Path.Combine(newDirectory, $"pic_VN{counter}{extension}");
+                            counter++;
+                        } while (File.Exists(newFilePath));
+
+                        // Sao chép file cũ sang file mới
+                        File.Copy(fileName, newFilePath);
+
+                        // Cập nhật biến a1 thành tên tệp mới
+                        a1 = newFilePath; // Hoặc chỉ cần lưu tên file mới: Path.GetFileName(newFilePath)
+                        textBox1.Text = Path.GetFileName(fileName); // Hiển thị tên file mới
+                    }
+                    else
+                    {
+                        // Nếu không có dấu, chỉ cần cập nhật biến a1 và hiển thị tên tệp
+                        a1 = fileName;
+                        textBox1.Text = Path.GetFileName(fileName);
+                    }
                 }
             }
         }
@@ -1072,11 +1103,43 @@ namespace Multimedia_ImageProcessing
                 // Kiểm tra nếu người dùng đã chọn một tệp
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    // Lấy tên tệp và hiển thị vào TextBox
-
+                    // Lấy tên tệp
                     string fileName = openFileDialog.FileName;
-                    a2 = fileName;
-                    textBox2.Text = Path.GetFileName(fileName); // Hoặc chỉ hiển thị tên tệp: Path.GetFileName(fileName);
+                    string newFileName = Path.GetFileName(fileName);
+                    string newDirectory = @"D:\picvn"; // Đường dẫn lưu ảnh mới
+                    string extension = Path.GetExtension(fileName);
+                    int counter = 1;
+
+                    // Kiểm tra xem tên tệp có dấu tiếng Việt hoặc dấu cách không
+                    if (fileName.Any(c => c > 127 || char.IsWhiteSpace(c)))
+                    {
+                        // Tạo thư mục nếu chưa tồn tại
+                        if (!Directory.Exists(newDirectory))
+                        {
+                            Directory.CreateDirectory(newDirectory);
+                        }
+
+                        // Tạo tên file mới
+                        string newFilePath;
+                        do
+                        {
+                            newFilePath = Path.Combine(newDirectory, $"pic_VN{counter}{extension}");
+                            counter++;
+                        } while (File.Exists(newFilePath));
+
+                        // Sao chép file cũ sang file mới
+                        File.Copy(fileName, newFilePath);
+
+                        // Cập nhật biến a1 thành tên tệp mới
+                        a2 = newFilePath; // Hoặc chỉ cần lưu tên file mới: Path.GetFileName(newFilePath)
+                        textBox2.Text = Path.GetFileName(fileName); // Hiển thị tên file mới
+                    }
+                    else
+                    {
+                        // Nếu không có dấu, chỉ cần cập nhật biến a1 và hiển thị tên tệp
+                        a2 = fileName;
+                        textBox2.Text = Path.GetFileName(fileName);
+                    }
                 }
             }
         }
