@@ -79,7 +79,9 @@ namespace Multimedia_ImageProcessing
 
         }
 
-        private void openTSMI_Click(object sender, EventArgs e)
+
+        // hàm của minh
+        /*private void openTSMI_Click(object sender, EventArgs e)
         {
             openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif|All|*.*"; // Định dạng ảnh hỗ trợ
             openFileDialog.Title = "Select an Image";
@@ -115,7 +117,61 @@ namespace Multimedia_ImageProcessing
                 // Kiểm tra và xóa các tệp
 
             }
+        }*/
+        private void openTSMI_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif|All|*.*"; // Định dạng ảnh hỗ trợ
+            openFileDialog.Title = "Select an Image";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = Path.GetFileName(openFileDialog.FileName);
+                string directory = Path.GetDirectoryName(openFileDialog.FileName);
+                string newFileName = "pic_VN";
+                string extension = Path.GetExtension(fileName);
+                int counter = 1;
+
+                // Kiểm tra tên file có chứa ký tự tiếng Việt hoặc dấu cách
+                if (fileName.Any(c => c > 127 || char.IsWhiteSpace(c)))
+                {
+                    // Hiển thị thông báo cho người dùng
+                    var result = MessageBox.Show(
+                        "Tên file chứa ký tự tiếng Việt hoặc dấu cách. Bạn có muốn đổi tên để sử dụng không?",
+                        "Xác nhận",
+                        MessageBoxButtons.YesNo);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        // Tạo tên file mới để tránh trùng lặp
+                        string newFilePath;
+                        do
+                        {
+                            newFilePath = Path.Combine(directory, $"{newFileName}{counter}{extension}");
+                            counter++;
+                        } while (File.Exists(newFilePath));
+
+                        // Di chuyển file để đổi tên
+                        File.Move(openFileDialog.FileName, newFilePath);
+                        // Cập nhật đường dẫn file mới
+                        openFileDialog.FileName = newFilePath; // Cập nhật FileName để sử dụng sau này
+                    }
+                    else
+                    {
+                        return; // Nếu không xác nhận, dừng lại
+                    }
+                }
+
+                // Tải hình ảnh vào PictureBox sau khi đổi tên (nếu có)
+                Im = Image.FromFile(openFileDialog.FileName);
+                pictureBox1.Image = Im;
+                open = true;
+                counter = 0;
+                arrayImage[counter++] = pictureBox1.Image;
+                pictureBox1.BackgroundImage = null;
+                pictureBox1.BackColor = Color.Black;
+            }
         }
+
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -958,6 +1014,7 @@ namespace Multimedia_ImageProcessing
                     string fileName = openFileDialog.FileName;
                     a1 = fileName;
                     textBox1.Text = Path.GetFileName(fileName); // Hoặc chỉ hiển thị tên tệp: Path.GetFileName(fileName);
+                    //textBox1.Text = a1;
                 }
             }
         }
