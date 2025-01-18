@@ -80,7 +80,7 @@ namespace Multimedia_ImageProcessing
 
                     process.WaitForExit();
 
-                    
+
                 }
             }
             catch (Exception ex)
@@ -198,7 +198,7 @@ namespace Multimedia_ImageProcessing
             }
             return outputImage;
         }
-   
+        
         public void xoayAnh(string inputImage, string outputImage, int doXoay)
         {
             string pythonScript = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts", "xoayAnh.py");
@@ -240,6 +240,37 @@ namespace Multimedia_ImageProcessing
                 {
                     FileName = "python",
                     Arguments = $"\"{pythonScript}\" \"{inputImage}\" \"{borderSize}\" \"{tenMau}\" \"{outputImage}\"", // Tham số truyền vào script
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using (Process process = Process.Start(psi))
+                {
+                    string output = process.StandardOutput.ReadToEnd();
+                    string error = process.StandardError.ReadToEnd();
+
+                    process.WaitForExit();
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+
+        }
+        public void ghepAnh(string pic1, string pic2,string output1, string kieu)
+        {
+            string pythonScript = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts", "ghepAnh.py");
+            try
+            {
+                ProcessStartInfo psi = new ProcessStartInfo
+                {
+                    FileName = "python",
+                    Arguments = $"\"{pythonScript}\" \"{pic1}\" \"{pic2}\" \"{kieu}\" \"{output1}\"", // Tham số truyền vào script
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     UseShellExecute = false,
