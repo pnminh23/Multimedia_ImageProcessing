@@ -151,5 +151,51 @@ namespace Multimedia_ImageProcessing
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
+        public Bitmap ApplySobelFilter(Bitmap inputImage)
+        {
+            int width = inputImage.Width;
+            int height = inputImage.Height;
+
+            Bitmap outputImage = new Bitmap(width, height);
+
+            int[,] sobelX = {
+                { -1,  0,  1 },
+                { -2,  0,  2 },
+                { -1,  0,  1 }
+            };
+
+            int[,] sobelY = {
+                { -1, -2, -1 },
+                {  0,  0,  0 },
+                {  1,  2,  1 }
+            };
+
+            for (int y = 1; y < height - 1; y++)
+            {
+                for (int x = 1; x < width - 1; x++)
+                {
+                    int gradientX = 0;
+                    int gradientY = 0;
+
+                    for (int ky = -1; ky <= 1; ky++)
+                    {
+                        for (int kx = -1; kx <= 1; kx++)
+                        {
+                            Color pixelColor = inputImage.GetPixel(x + kx, y + ky);
+                            int intensity = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
+
+                            gradientX += intensity * sobelX[ky + 1, kx + 1];
+                            gradientY += intensity * sobelY[ky + 1, kx + 1];
+                        }
+                    }
+
+                    int magnitude = (int)Math.Sqrt(gradientX * gradientX + gradientY * gradientY);
+                    magnitude = Math.Clamp(magnitude, 0, 255);
+
+                    outputImage.SetPixel(x, y, Color.FromArgb(magnitude, magnitude, magnitude));
+                }
+            }
+            return outputImage;
+        }
     }
 }

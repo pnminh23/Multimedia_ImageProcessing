@@ -22,6 +22,8 @@ namespace Multimedia_ImageProcessing
             tb_thongSo.Visible = false;
             contrastTracker.Visible = false;
             comboBox1.SelectedIndex = 0;
+            btn_rotateX.Visible = false;
+            btn_rotateY.Visible = false;
 
         }
         //public void appearChinhDoSang()
@@ -110,7 +112,7 @@ namespace Multimedia_ImageProcessing
 
                 lbl_thongSo.Visible = true;
                 tb_thongSo.Visible = false;
-                
+
                 btn_apDung.Visible = false;
 
 
@@ -118,7 +120,7 @@ namespace Multimedia_ImageProcessing
                 int distanceFromTextBox = 20; // Khoảng cách bạn muốn
 
                 // Đặt vị trí cho contrastTracker dưới TextBox
-                contrastTracker.Location = new Point(tb_thongSo.Location.X, 
+                contrastTracker.Location = new Point(tb_thongSo.Location.X,
                     tb_thongSo.Location.Y + tb_thongSo.Height + distanceFromTextBox);
 
             }
@@ -146,7 +148,10 @@ namespace Multimedia_ImageProcessing
             else if (comboBox1.SelectedIndex == 8)
             {
                 lbl_thongSo.Text = "Chiều lật";
-                appear();
+                btn_rotateX.Visible = true;
+                btn_rotateY.Visible = true;
+                tb_thongSo.Visible = false;
+                contrastTracker.Visible = false;
 
             }
             else if (comboBox1.SelectedIndex == 9)
@@ -160,6 +165,11 @@ namespace Multimedia_ImageProcessing
                 lbl_thongSo.Text = "Cắt ảnh";
                 appear();
 
+            }
+            else if (comboBox1.SelectedIndex == 11)
+            {
+                lbl_thongSo.Text = "Lấy biên ảnh bằng phương pháp sobel";
+                lbl_thongSo.Visible = true;
             }
         }
 
@@ -394,6 +404,23 @@ namespace Multimedia_ImageProcessing
             else if (comboBox1.SelectedIndex == 10)
             {
             }
+            else if (comboBox1.SelectedIndex == 11)
+            {
+                if (open)
+                {
+                    //Bitmap original = new Bitmap(openFileDialog.FileName);
+                    imP = new imageProcess();
+                    Image im = pictureBox1.Image;
+                    Bitmap im1 = new Bitmap(im);
+                    Bitmap result = imP.ApplySobelFilter(im1);
+                    pictureBox1.Image = result;
+                    arrayImage[counter++] = pictureBox1.Image;
+                }
+                else
+                {
+                    MessageBox.Show("At first Open An Image", "File not Opened ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void contrastTracker_Scroll(object sender, EventArgs e)
@@ -487,7 +514,7 @@ namespace Multimedia_ImageProcessing
 
         private void tb_thongSo_TextChanged_1(object sender, EventArgs e)
         {
-            
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -573,6 +600,57 @@ namespace Multimedia_ImageProcessing
 
         }
 
-       
+        private void btn_rotateY_Click(object sender, EventArgs e)
+        {
+            if (open)
+            {
+                Image im = pictureBox1.Image;
+                Bitmap im1 = new Bitmap(im);
+                im1.RotateFlip(RotateFlipType.Rotate180FlipX);
+                pictureBox1.Image = im1;
+
+            }
+            else
+            {
+                MessageBox.Show("At first Open An Image", "File not Opened ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btn_rotateX_Click(object sender, EventArgs e)
+        {
+
+            if (open)
+            {
+                Image im = pictureBox1.Image;
+                Bitmap im1 = new Bitmap(im);
+                im1.RotateFlip(RotateFlipType.Rotate180FlipY);
+                pictureBox1.Image = im1;
+                arrayImage[counter++] = pictureBox1.Image;
+            }
+            else
+            {
+                MessageBox.Show("At first Open An Image", "File not Opened ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void sobelTSMI_Click(object sender, EventArgs e)
+        {
+            if (open)
+            {
+                //Bitmap original = new Bitmap(openFileDialog.FileName);
+                imP = new imageProcess();
+                Image im = pictureBox1.Image;
+                Bitmap im1 = new Bitmap(im);
+                Bitmap result = imP.ApplySobelFilter(im1);
+                pictureBox1.Image = result;
+                arrayImage[counter++] = pictureBox1.Image;
+            }
+            else
+            {
+                MessageBox.Show("At first Open An Image", "File not Opened ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            
+        }
     }
 }

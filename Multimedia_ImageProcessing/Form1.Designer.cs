@@ -36,6 +36,9 @@
             label3 = new Label();
             label2 = new Label();
             groupBox3 = new GroupBox();
+            btn_rotateX = new Button();
+            btn_rotateY = new Button();
+            tb_thongSo = new TextBox();
             lbl_thongSo = new Label();
             contrastTracker = new TrackBar();
             menuStrip1 = new MenuStrip();
@@ -54,6 +57,7 @@
             flipTSMI = new ToolStripMenuItem();
             frameTSMI = new ToolStripMenuItem();
             cutTSMI = new ToolStripMenuItem();
+            sobelTSMI = new ToolStripMenuItem();
             thaoTácToolStripMenuItem = new ToolStripMenuItem();
             undoTSMI = new ToolStripMenuItem();
             redoTSMI = new ToolStripMenuItem();
@@ -64,7 +68,6 @@
             label5 = new Label();
             btn_redo = new Button();
             btn_undo = new Button();
-            tb_thongSo = new TextBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox2.SuspendLayout();
@@ -149,6 +152,8 @@
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(btn_rotateX);
+            groupBox3.Controls.Add(btn_rotateY);
             groupBox3.Controls.Add(tb_thongSo);
             groupBox3.Controls.Add(lbl_thongSo);
             groupBox3.Controls.Add(contrastTracker);
@@ -160,12 +165,40 @@
             groupBox3.Text = "Tuỳ chỉnh";
             groupBox3.Enter += groupBox3_Enter;
             // 
+            // btn_rotateX
+            // 
+            btn_rotateX.Location = new Point(92, 49);
+            btn_rotateX.Name = "btn_rotateX";
+            btn_rotateX.Size = new Size(75, 23);
+            btn_rotateX.TabIndex = 12;
+            btn_rotateX.Text = "Ngang";
+            btn_rotateX.UseVisualStyleBackColor = true;
+            btn_rotateX.Click += btn_rotateX_Click;
+            // 
+            // btn_rotateY
+            // 
+            btn_rotateY.Location = new Point(6, 49);
+            btn_rotateY.Name = "btn_rotateY";
+            btn_rotateY.Size = new Size(75, 23);
+            btn_rotateY.TabIndex = 11;
+            btn_rotateY.Text = "Dọc";
+            btn_rotateY.UseVisualStyleBackColor = true;
+            btn_rotateY.Click += btn_rotateY_Click;
+            // 
+            // tb_thongSo
+            // 
+            tb_thongSo.Location = new Point(6, 50);
+            tb_thongSo.Name = "tb_thongSo";
+            tb_thongSo.Size = new Size(161, 23);
+            tb_thongSo.TabIndex = 10;
+            tb_thongSo.TextChanged += tb_thongSo_TextChanged_1;
+            // 
             // lbl_thongSo
             // 
-            lbl_thongSo.AutoSize = true;
             lbl_thongSo.Location = new Point(6, 32);
+            lbl_thongSo.MaximumSize = new Size(200, 100);
             lbl_thongSo.Name = "lbl_thongSo";
-            lbl_thongSo.Size = new Size(56, 15);
+            lbl_thongSo.Size = new Size(160, 50);
             lbl_thongSo.TabIndex = 9;
             lbl_thongSo.Text = "Thông số";
             // 
@@ -199,30 +232,26 @@
             // openTSMI
             // 
             openTSMI.Name = "openTSMI";
-            openTSMI.Size = new Size(180, 22);
+            openTSMI.Size = new Size(149, 22);
             openTSMI.Text = "Mở";
             openTSMI.Click += openTSMI_Click;
             // 
             // saveTSMI
             // 
             saveTSMI.Name = "saveTSMI";
-            saveTSMI.Size = new Size(180, 22);
+            saveTSMI.Size = new Size(149, 22);
             saveTSMI.Text = "Lưu";
-
-
-
             saveTSMI.Click += saveTSMI_Click;
-
             // 
             // fomatTSMI
             // 
             fomatTSMI.Name = "fomatTSMI";
-            fomatTSMI.Size = new Size(180, 22);
+            fomatTSMI.Size = new Size(149, 22);
             fomatTSMI.Text = "Đổi định dạng";
             // 
             // chỉnhSửaToolStripMenuItem
             // 
-            chỉnhSửaToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { brightnessTSMI, blurTSMI, colorTSMI, contrastTSMI, removeBkgSTMI, collageTSMI, rotateSTMI, flipTSMI, frameTSMI, cutTSMI });
+            chỉnhSửaToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { brightnessTSMI, blurTSMI, colorTSMI, contrastTSMI, removeBkgSTMI, collageTSMI, rotateSTMI, flipTSMI, frameTSMI, cutTSMI, sobelTSMI });
             chỉnhSửaToolStripMenuItem.Name = "chỉnhSửaToolStripMenuItem";
             chỉnhSửaToolStripMenuItem.Size = new Size(72, 20);
             chỉnhSửaToolStripMenuItem.Text = "Chỉnh sửa";
@@ -287,6 +316,13 @@
             cutTSMI.Size = new Size(188, 22);
             cutTSMI.Text = "Cắt ảnh";
             // 
+            // sobelTSMI
+            // 
+            sobelTSMI.Name = "sobelTSMI";
+            sobelTSMI.Size = new Size(188, 22);
+            sobelTSMI.Text = "Lấy biên ảnh";
+            sobelTSMI.Click += sobelTSMI_Click;
+            // 
             // thaoTácToolStripMenuItem
             // 
             thaoTácToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { undoTSMI, redoTSMI, presentTSMI });
@@ -332,7 +368,7 @@
             // 
             comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "---Chọn chức năng---", "Chỉnh độ sáng", "Làm mờ", "Chỉnh màu", "Chỉnh độ tương phản", "Xoá phông", "Ghép ảnh", "Xoay ảnh", "Lật ảnh", "Thêm khung ảnh", "Cắt ảnh" });
+            comboBox1.Items.AddRange(new object[] { "---Chọn chức năng---", "Chỉnh độ sáng", "Làm mờ", "Chỉnh màu", "Chỉnh độ tương phản", "Xoá phông", "Ghép ảnh", "Xoay ảnh", "Lật ảnh", "Thêm khung ảnh", "Cắt ảnh", "Lấy biên ảnh" });
             comboBox1.Location = new Point(12, 100);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(173, 23);
@@ -368,14 +404,6 @@
             btn_undo.Text = "<<";
             btn_undo.UseVisualStyleBackColor = true;
             btn_undo.Click += btn_undo_Click;
-            // 
-            // tb_thongSo
-            // 
-            tb_thongSo.Location = new Point(6, 50);
-            tb_thongSo.Name = "tb_thongSo";
-            tb_thongSo.Size = new Size(161, 23);
-            tb_thongSo.TabIndex = 10;
-            tb_thongSo.TextChanged += tb_thongSo_TextChanged_1;
             // 
             // Form1
             // 
@@ -442,7 +470,7 @@
         private ToolStripMenuItem redoTSMI;
         private ToolStripMenuItem presentTSMI;
         private TrackBar contrastTracker;
-        private Button button1;
+        private Button btn_rotateY;
         private Button btn_redo;
         private Button btn_undo; 
         private System.Windows.Forms.ListBox listBox1;
@@ -451,6 +479,7 @@
         private ToolStripMenuItem saveTSMI;
         private ToolStripMenuItem fomatTSMI;
         private TextBox tb_thongSo;
-
+        private Button btn_rotateX;
+        private ToolStripMenuItem sobelTSMI;
     }
 }
