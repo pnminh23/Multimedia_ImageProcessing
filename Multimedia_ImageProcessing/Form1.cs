@@ -35,10 +35,15 @@ namespace Multimedia_ImageProcessing
         //}
         public void appear()
         {
+            label6.Visible = false;
+            label7.Visible = false;
             btn_apDung.Visible = true;
             lbl_thongSo.Visible = true;
             tb_thongSo.Visible = true;
             contrastTracker.Visible = false;
+            comboBox2.Visible = false;
+            comboBox3.Visible = false;
+            btn_apDung.Enabled = true;
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -117,7 +122,7 @@ namespace Multimedia_ImageProcessing
 
 
                 // Đặt tọa độ mới cho thanh kéo// Đặt khoảng cách mong muốn từ TextBox xuống thanh kéo
-                int distanceFromTextBox = 20; // Khoảng cách bạn muốn
+                int distanceFromTextBox = 15; // Khoảng cách bạn muốn
 
                 // Đặt vị trí cho contrastTracker dưới TextBox
                 contrastTracker.Location = new Point(tb_thongSo.Location.X,
@@ -157,8 +162,17 @@ namespace Multimedia_ImageProcessing
             else if (comboBox1.SelectedIndex == 9)
             {
                 lbl_thongSo.Text = "Thêm khung ảnh";
-                appear();
-
+                btn_apDung.Visible = true;
+                lbl_thongSo.Visible = true;
+                contrastTracker.Visible = false;
+                btn_apDung.Enabled = true;
+                comboBox2.Visible = true;
+                comboBox3.Visible = true;
+                comboBox2.SelectedIndex = 0;
+                comboBox3.SelectedIndex = 0;
+                tb_thongSo.Visible = false;
+                label6.Visible = true;
+                label7.Visible = true;
             }
             else if (comboBox1.SelectedIndex == 10)
             {
@@ -166,10 +180,23 @@ namespace Multimedia_ImageProcessing
                 appear();
 
             }
+
             else if (comboBox1.SelectedIndex == 11)
             {
                 lbl_thongSo.Text = "Lấy biên ảnh bằng phương pháp sobel";
                 lbl_thongSo.Visible = true;
+
+            else
+            {
+                label6.Visible = false;
+                label7.Visible = false;
+                btn_apDung.Enabled = false;
+                lbl_thongSo.Visible = false;
+                tb_thongSo.Visible = false;
+                contrastTracker.Visible = false;
+                comboBox2.Visible = false;
+                comboBox3.Visible = false;
+
             }
         }
 
@@ -394,12 +421,122 @@ namespace Multimedia_ImageProcessing
             }
             else if (comboBox1.SelectedIndex == 7)
             {
+                int doXoay;
+                if (int.TryParse(tb_thongSo.Text, out doXoay)) // Kiểm tra nếu có mục nào được chọn
+                {
+                    //int brightnessValue = Convert.ToInt32(tb_thongSo.Text);
+
+                    // Kiểm tra điều kiện độ màu
+                    if (doXoay < -360 || doXoay > 360)
+                    {
+                        MessageBox.Show("Giá trị độ xoay phải nằm trong khoảng từ -360 đến 360.");
+                        return; // Thoát khỏi phương thức nếu điều kiện không hợp lệ
+                    }
+
+                    string inputImage = openFileDialog.FileName;
+
+                    // Lấy đường dẫn thư mục `output` trong dự án
+                    string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                    string outputFolder = Path.Combine(projectDirectory, "output");
+
+                    // Tạo thư mục `output` nếu chưa tồn tại
+                    if (!Directory.Exists(outputFolder))
+                    {
+                        Directory.CreateDirectory(outputFolder);
+                    }
+
+                    // Đường dẫn file đầu ra
+                    string outputImage = Path.Combine(outputFolder, "ChangedoXoay.png");
+
+                    // Nếu tệp đầu ra đã tồn tại, chuyển đường dẫn
+                    int n = 0;
+                    do
+                    {
+                        n++; // Tăng giá trị n
+                        outputImage = Path.Combine(outputFolder, $"ChangedoXoay_{doXoay + n}.png");
+                    } while (File.Exists(outputImage)); // Kiểm tra nếu tệp đã tồn tại
+
+                    imP = new imageProcess();
+                    // Gọi hàm xử lý
+                    imP.xoayAnh(inputImage, outputImage, doXoay);
+
+                    // Hiển thị ảnh đã xử lý lên PictureBox
+                    if (File.Exists(outputImage)) // Kiểm tra ảnh đã được tạo
+                    {
+                        pictureBox1.Image = new Bitmap(outputImage);
+                        arrayImage[counter++] = pictureBox1.Image;
+
+                        // MessageBox.Show("Ảnh đã được xử lý và hiển thị!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không thể tìm thấy ảnh đã xử lý.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Vui lòng điền hệ số điều chỉnh độ xoay");
+                }
             }
             else if (comboBox1.SelectedIndex == 8)
             {
             }
             else if (comboBox1.SelectedIndex == 9)
             {
+                if (comboBox2.SelectedItem.ToString() != "Chọn màu" &&
+                    comboBox3.SelectedItem.ToString() != "Chọn kích cỡ khung")
+                {
+                    
+                    string tenMau = comboBox2.SelectedItem.ToString();
+
+                    string inputImage = openFileDialog.FileName;
+                    int borderSize;
+                    if (int.TryParse(comboBox3.SelectedItem.ToString(), out borderSize))
+                    {
+                        // Lấy đường dẫn thư mục `output` trong dự án
+                        string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                        string outputFolder = Path.Combine(projectDirectory, "output");
+
+                        // Tạo thư mục `output` nếu chưa tồn tại
+                        if (!Directory.Exists(outputFolder))
+                        {
+                            Directory.CreateDirectory(outputFolder);
+                        }
+
+                        // Đường dẫn file đầu ra
+                        string outputImage = Path.Combine(outputFolder, "ChangeKhung.png");
+
+                        // Nếu tệp đầu ra đã tồn tại, chuyển đường dẫn
+                        int n = 0;
+                        do
+                        {
+                            n++; // Tăng giá trị n
+                            outputImage = Path.Combine(outputFolder, $"ChangeKhung_{borderSize + n}.png");
+                        } while (File.Exists(outputImage)); // Kiểm tra nếu tệp đã tồn tại
+
+                        imP = new imageProcess();
+                        // Gọi hàm xử lý
+                        imP.themKhung(inputImage, outputImage, tenMau, borderSize);
+
+                        // Hiển thị ảnh đã xử lý lên PictureBox
+                        if (File.Exists(outputImage)) // Kiểm tra ảnh đã được tạo
+                        {
+                            pictureBox1.Image = new Bitmap(outputImage);
+                            arrayImage[counter++] = pictureBox1.Image;
+
+                            // MessageBox.Show("Ảnh đã được xử lý và hiển thị!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Không thể tìm thấy ảnh đã xử lý.");
+                        }
+                    }
+                }
+                else
+                {//ẩn nút áp dụng 
+                    MessageBox.Show("Vui lòng thử lại.");
+                    return;
+                }
             }
             else if (comboBox1.SelectedIndex == 10)
             {
@@ -533,6 +670,9 @@ namespace Multimedia_ImageProcessing
             }
         }
 
+
+
+
         private void tệpToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -597,8 +737,23 @@ namespace Multimedia_ImageProcessing
 
         private void groupBox3_Enter(object sender, EventArgs e)
         {
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
+
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
 
         private void btn_rotateY_Click(object sender, EventArgs e)
         {
@@ -651,6 +806,11 @@ namespace Multimedia_ImageProcessing
             }
 
             
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+
         }
     }
 }
