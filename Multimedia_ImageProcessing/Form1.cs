@@ -1237,51 +1237,13 @@ namespace Multimedia_ImageProcessing
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            if (pictureBox1.Image != null) // Kiểm tra ảnh có tồn tại không
+            // Nếu có vùng chọn, vẽ hình chữ nhật lên PictureBox
+            if (rectCropArea != null && rectCropArea.Width > 0 && rectCropArea.Height > 0)
             {
-                if (rectCropArea != null && rectCropArea.Width > 0 && rectCropArea.Height > 0)
+                using (Pen pen = new Pen(Color.Red, 2))
                 {
-                    // Lấy hình ảnh gốc từ PictureBox
-                    Bitmap originalImage = new Bitmap(pictureBox1.Image);
-
-                    // Tạo ảnh sao chép để thao tác
-                    Bitmap processedImage = new Bitmap(originalImage);
-                    Graphics g = Graphics.FromImage(processedImage);
-
-                    // Vùng được chọn sẽ không thay đổi, chỉ giảm độ sáng vùng còn lại
-                    for (int x = 0; x < processedImage.Width; x++)
-                    {
-                        for (int y = 0; y < processedImage.Height; y++)
-                        {
-                            // Kiểm tra nếu pixel nằm ngoài vùng chọn
-                            if (!rectCropArea.Contains(x, y))
-                            {
-                                // Giảm độ sáng của pixel ngoài vùng chọn (ví dụ: giảm 50%)
-                                Color originalColor = processedImage.GetPixel(x, y);
-                                int red = (int)(originalColor.R * 0.5);
-                                int green = (int)(originalColor.G * 0.5);
-                                int blue = (int)(originalColor.B * 0.5);
-
-                                // Tạo màu mới với độ sáng giảm đi
-                                Color newColor = Color.FromArgb(red, green, blue);
-                                processedImage.SetPixel(x, y, newColor);
-                            }
-                        }
-                    }
-
-                    // Vẽ ảnh đã xử lý lên PictureBox
-                    e.Graphics.DrawImage(processedImage, 0, 0);
+                    e.Graphics.DrawRectangle(pen, rectCropArea);
                 }
-                else
-                {
-                    // Nếu không có vùng chọn, chỉ vẽ ảnh gốc
-                    e.Graphics.DrawImage(pictureBox1.Image, 0, 0);
-                }
-            }
-            else
-            {
-                // Nếu không có ảnh, vẽ một thông báo hoặc không làm gì
-                e.Graphics.DrawString("No image loaded", new Font("Arial", 16), Brushes.Red, new PointF(100, 100));
             }
         }
     }
