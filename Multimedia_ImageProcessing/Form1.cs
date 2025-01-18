@@ -185,6 +185,7 @@ namespace Multimedia_ImageProcessing
             {
                 lbl_thongSo.Text = "Lấy biên ảnh bằng phương pháp sobel";
                 lbl_thongSo.Visible = true;
+            }
 
             else
             {
@@ -805,8 +806,8 @@ namespace Multimedia_ImageProcessing
                 MessageBox.Show("At first Open An Image", "File not Opened ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            
 
+        }
         private void label7_Click(object sender, EventArgs e)
         {
 
