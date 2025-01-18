@@ -197,9 +197,8 @@ namespace Multimedia_ImageProcessing
                 }
             }
             return outputImage;
-=======
-
-        
+        }
+   
         public void xoayAnh(string inputImage, string outputImage, int doXoay)
         {
             string pythonScript = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts", "xoayAnh.py");
