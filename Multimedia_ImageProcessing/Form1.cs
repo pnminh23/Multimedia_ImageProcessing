@@ -7,14 +7,23 @@ namespace Multimedia_ImageProcessing
 {
     public partial class Form1 : Form
     {
-        private string a1,a2;
+        private string a1, a2;
         private Bitmap bitmap;
         Image Im;
         Image[] arrayImage = new Image[50000];
         Boolean open = false;
         imageProcess imP;
         int counter = 0;
-
+        //phuc
+        int xDown = 0;
+        int yDown = 0;
+        int xUp = 0;
+        int yUp = 0;
+        Rectangle rectCropArea = new Rectangle();
+        System.IO.MemoryStream ms = new System.IO.MemoryStream();
+        Task timeout;
+        string fn = "";
+        //
 
         public Form1()
         {
@@ -60,7 +69,7 @@ namespace Multimedia_ImageProcessing
             comboBox4.SelectedIndex = 0;
             openTSMI.Enabled = false;
             btn_apDung.Enabled = true;
-            btn_apDung.Visible= true;
+            btn_apDung.Visible = true;
         }
 
         public void koghepAnh()
@@ -204,7 +213,7 @@ namespace Multimedia_ImageProcessing
         }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            
+
             // Nếu có tên file gốc, trả lại tên file
             /*if (!string.IsNullOrEmpty(originalFileName))
             {
@@ -574,10 +583,10 @@ namespace Multimedia_ImageProcessing
             }
             else if (comboBox1.SelectedIndex == 6)
             {
-                if (textBox1.Text != textBox2.Text&& comboBox4.SelectedItem.ToString()!="Chọn loại ghép")
+                if (textBox1.Text != textBox2.Text && comboBox4.SelectedItem.ToString() != "Chọn loại ghép")
                 {
 
-                    string kieu="";
+                    string kieu = "";
                     try
                     {
 
@@ -648,7 +657,7 @@ namespace Multimedia_ImageProcessing
                     {
                         MessageBox.Show("Không thể tìm thấy ảnh đã xử lý.");
                     }
-                    
+
                 }
                 else
                 {//ẩn nút áp dụng 
@@ -775,8 +784,32 @@ namespace Multimedia_ImageProcessing
                     return;
                 }
             }
+            //phuc
             else if (comboBox1.SelectedIndex == 10)
             {
+                try
+                {
+                     //tạo bitmap                  
+                    Bitmap sourceBitmap = new Bitmap(pictureBox1.Image);
+
+                    //tạo ảnh mới sau khi đã được cắt
+                    Bitmap croppedBitmap = new Bitmap(rectCropArea.Width, rectCropArea.Height);
+                    using (Graphics g = Graphics.FromImage(croppedBitmap))
+                    {
+                        g.DrawImage(sourceBitmap, new Rectangle(0, 0, rectCropArea.Width, rectCropArea.Height), rectCropArea, GraphicsUnit.Pixel);
+                    }
+
+                    pictureBox1.Image = croppedBitmap;
+
+                    btn_apDung.Enabled = false;
+
+                    MessageBox.Show("Cắt ảnh thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Đã xảy ra lỗi khi cắt ảnh: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            
             }
             else if (comboBox1.SelectedIndex == 11)
             {
@@ -1056,7 +1089,7 @@ namespace Multimedia_ImageProcessing
 
         private void button1_Click(object sender, EventArgs e)
         {
-         
+
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 // Cài đặt bộ lọc để chỉ cho phép chọn các tệp hình ảnh
@@ -1074,7 +1107,7 @@ namespace Multimedia_ImageProcessing
                 }
             }
         }
-        
+
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -1088,7 +1121,7 @@ namespace Multimedia_ImageProcessing
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     // Lấy tên tệp và hiển thị vào TextBox
-                    
+
                     string fileName = openFileDialog.FileName;
                     a2 = fileName;
                     textBox2.Text = Path.GetFileName(fileName); // Hoặc chỉ hiển thị tên tệp: Path.GetFileName(fileName);
@@ -1110,6 +1143,29 @@ namespace Multimedia_ImageProcessing
         {
 
         }
+        //phuc
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            //pictureBox1.Image.Clone();
+            xUp = e.X;
+            yUp = e.Y;
+            Rectangle rec = new Rectangle(xDown, yDown, Math.Abs(xUp - xDown), Math.Abs(yUp - yDown));
+            using (Pen pen = new Pen(Color.YellowGreen, 3))
+            {
 
+                pictureBox1.CreateGraphics().DrawRectangle(pen, rec);
+            }
+            rectCropArea = rec;
+            btn_apDung.Enabled = true;
+        }
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            pictureBox1.Invalidate();
+
+            xDown = e.X;
+            yDown = e.Y;
+            btn_apDung.Enabled = true;
+        }
     }
 }
