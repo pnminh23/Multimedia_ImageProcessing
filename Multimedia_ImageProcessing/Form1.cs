@@ -18,6 +18,7 @@ namespace Multimedia_ImageProcessing
 
         public Form1()
         {
+
             InitializeComponent();
             lbl_thongSo.Visible = false;
             tb_thongSo.Visible = false;
@@ -118,6 +119,8 @@ namespace Multimedia_ImageProcessing
 
             }
         }*/
+        private string originalFileName = string.Empty; // Biến lưu tên file gốc
+
         private void openTSMI_Click(object sender, EventArgs e)
         {
             openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif|All|*.*"; // Định dạng ảnh hỗ trợ
@@ -136,7 +139,7 @@ namespace Multimedia_ImageProcessing
                 {
                     // Hiển thị thông báo cho người dùng
                     var result = MessageBox.Show(
-                        "Tên file chứa ký tự tiếng Việt hoặc dấu cách. Bạn có muốn đổi tên để sử dụng không?",
+                        "Tên file chứa ký tự tiếng Việt hoặc dấu cách. Bạn có muốn đổi tên tạm thời không?",
                         "Xác nhận",
                         MessageBoxButtons.YesNo);
 
@@ -149,6 +152,9 @@ namespace Multimedia_ImageProcessing
                             newFilePath = Path.Combine(directory, $"{newFileName}{counter}{extension}");
                             counter++;
                         } while (File.Exists(newFilePath));
+
+                        // Lưu tên file gốc
+                        originalFileName = openFileDialog.FileName;
 
                         // Di chuyển file để đổi tên
                         File.Move(openFileDialog.FileName, newFilePath);
@@ -170,6 +176,56 @@ namespace Multimedia_ImageProcessing
                 pictureBox1.BackgroundImage = null;
                 pictureBox1.BackColor = Color.Black;
             }
+        }
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+            // Nếu có tên file gốc, trả lại tên file
+            if (!string.IsNullOrEmpty(originalFileName))
+            {
+                string directory = Path.GetDirectoryName(originalFileName);
+                string newFileName = "pic_VN"; // Tên file mới
+                string extension = Path.GetExtension(originalFileName);
+                string newFilePath = Path.Combine(directory, $"{newFileName}1{extension}"); // Tên file đổi
+
+                // Kiểm tra và đổi tên lại
+                if (File.Exists(newFilePath))
+                {
+                    try
+                    {
+                        File.Move(newFilePath, originalFileName);
+                    }
+                    catch (IOException ex)
+                    {
+                        MessageBox.Show("Lỗi khi đổi tên file: " + ex.Message);
+                    }
+                }
+            }
+        }
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            
+            // Nếu có tên file gốc, trả lại tên file
+            /*if (!string.IsNullOrEmpty(originalFileName))
+            {
+                string directory = Path.GetDirectoryName(originalFileName);
+                string newFileName = "pic_VN"; // Tên file mới
+                string extension = Path.GetExtension(originalFileName);
+                string newFilePath = Path.Combine(directory, $"{newFileName}1{extension}"); // Tên file đổi
+
+                // Kiểm tra và đổi tên lại
+                if (File.Exists(newFilePath))
+                {
+                    try
+                    {
+                        File.Move(newFilePath, originalFileName);
+                    }
+                    catch (IOException ex)
+                    {
+                        MessageBox.Show("Lỗi khi đổi tên file: " + ex.Message);
+                    }
+                }
+            }*/
         }
 
 

@@ -530,6 +530,7 @@
             MainMenuStrip = menuStrip1;
             Name = "Form1";
             Text = "Trình chỉnh sửa ảnh ";
+            FormClosed += Form1_FormClosed;
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
