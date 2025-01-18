@@ -1,4 +1,4 @@
-﻿﻿using System.Data;
+﻿using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
@@ -7,7 +7,8 @@ namespace Multimedia_ImageProcessing
 {
     public partial class Form1 : Form
     {
-        private string a1,a2;
+        private string tenAnh;
+        private string a1, a2;
         private Bitmap bitmap;
         Image Im;
         Image[] arrayImage = new Image[50000];
@@ -60,7 +61,7 @@ namespace Multimedia_ImageProcessing
             comboBox4.SelectedIndex = 0;
             openTSMI.Enabled = false;
             btn_apDung.Enabled = true;
-            btn_apDung.Visible= true;
+            btn_apDung.Visible = true;
         }
 
         public void koghepAnh()
@@ -119,7 +120,6 @@ namespace Multimedia_ImageProcessing
 
             }
         }*/
-        private string originalFileName = string.Empty; // Biến lưu tên file gốc
 
         private void openTSMI_Click(object sender, EventArgs e)
         {
@@ -129,50 +129,42 @@ namespace Multimedia_ImageProcessing
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string fileName = Path.GetFileName(openFileDialog.FileName);
-                string directory = Path.GetDirectoryName(openFileDialog.FileName);
-                string newFileName = "pic_VN";
                 string extension = Path.GetExtension(fileName);
                 int counter = 1;
+                string newDirectory = @"D:\picvn"; // Thư mục lưu ảnh mới
+                string newFileName = "pic_VN";
+
+                // Tạo thư mục nếu chưa tồn tại
+                if (!Directory.Exists(newDirectory))
+                {
+                    Directory.CreateDirectory(newDirectory);
+                }
 
                 // Kiểm tra tên file có chứa ký tự tiếng Việt hoặc dấu cách
                 if (fileName.Any(c => c > 127 || char.IsWhiteSpace(c)))
                 {
-                    // Hiển thị thông báo cho người dùng
-                    var result = MessageBox.Show(
-                        "Tên file chứa ký tự tiếng Việt hoặc dấu cách. Bạn có muốn đổi tên tạm thời không?",
-                        "Xác nhận",
-                        MessageBoxButtons.YesNo);
-
-                    if (result == DialogResult.Yes)
+                    // Tạo tên file mới để tránh trùng lặp
+                    string newFilePath;
+                    do
                     {
-                        // Tạo tên file mới để tránh trùng lặp
-                        string newFilePath;
-                        do
-                        {
-                            newFilePath = Path.Combine(directory, $"{newFileName}{counter}{extension}");
-                            counter++;
-                        } while (File.Exists(newFilePath));
+                        newFilePath = Path.Combine(newDirectory, $"{newFileName}{counter}{extension}");
+                        counter++;
+                    } while (File.Exists(newFilePath));
 
-                        // Lưu tên file gốc
-                        originalFileName = openFileDialog.FileName;
+                    // Sao chép file cũ sang file mới
+                    File.Copy(openFileDialog.FileName, newFilePath);
 
-                        // Di chuyển file để đổi tên
-                        File.Move(openFileDialog.FileName, newFilePath);
-                        // Cập nhật đường dẫn file mới
-                        openFileDialog.FileName = newFilePath; // Cập nhật FileName để sử dụng sau này
-                    }
-                    else
-                    {
-                        return; // Nếu không xác nhận, dừng lại
-                    }
+                    // Cập nhật đường dẫn file mới
+                    openFileDialog.FileName = newFilePath; // Cập nhật FileName để sử dụng sau này
                 }
 
-                // Tải hình ảnh vào PictureBox sau khi đổi tên (nếu có)
+                // Tải hình ảnh vào PictureBox
                 Im = Image.FromFile(openFileDialog.FileName);
                 pictureBox1.Image = Im;
                 open = true;
-                counter = 0;
-                arrayImage[counter++] = pictureBox1.Image;
+
+                // Cập nhật mảng ảnh (nếu cần)
+                arrayImage[0] = pictureBox1.Image; // Giả sử chỉ lưu ảnh đầu tiên
                 pictureBox1.BackgroundImage = null;
                 pictureBox1.BackColor = Color.Black;
             }
@@ -180,31 +172,10 @@ namespace Multimedia_ImageProcessing
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
 
-            // Nếu có tên file gốc, trả lại tên file
-            if (!string.IsNullOrEmpty(originalFileName))
-            {
-                string directory = Path.GetDirectoryName(originalFileName);
-                string newFileName = "pic_VN"; // Tên file mới
-                string extension = Path.GetExtension(originalFileName);
-                string newFilePath = Path.Combine(directory, $"{newFileName}1{extension}"); // Tên file đổi
-
-                // Kiểm tra và đổi tên lại
-                if (File.Exists(newFilePath))
-                {
-                    try
-                    {
-                        File.Move(newFilePath, originalFileName);
-                    }
-                    catch (IOException ex)
-                    {
-                        MessageBox.Show("Lỗi khi đổi tên file: " + ex.Message);
-                    }
-                }
-            }
         }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            
+
             // Nếu có tên file gốc, trả lại tên file
             /*if (!string.IsNullOrEmpty(originalFileName))
             {
@@ -574,10 +545,10 @@ namespace Multimedia_ImageProcessing
             }
             else if (comboBox1.SelectedIndex == 6)
             {
-                if (textBox1.Text != textBox2.Text&& comboBox4.SelectedItem.ToString()!="Chọn loại ghép")
+                if (textBox1.Text != textBox2.Text && comboBox4.SelectedItem.ToString() != "Chọn loại ghép")
                 {
 
-                    string kieu="";
+                    string kieu = "";
                     try
                     {
 
@@ -648,7 +619,7 @@ namespace Multimedia_ImageProcessing
                     {
                         MessageBox.Show("Không thể tìm thấy ảnh đã xử lý.");
                     }
-                    
+
                 }
                 else
                 {//ẩn nút áp dụng 
@@ -909,6 +880,20 @@ namespace Multimedia_ImageProcessing
                     File.Delete(file);
                 }
             }
+            string output2 = @"D:\picvn";
+            if (Directory.Exists(output2))
+            {
+                //foreach (var file in Directory.GetFiles(outputFolder, "ChangedoSang*.png"))
+                foreach (var file in Directory.GetFiles(output2, "pic_VN*.png"))
+                {
+                    File.Delete(file);
+                }
+                foreach (var file in Directory.GetFiles(output2, "pic_VN*.jpg"))
+                {
+                    File.Delete(file);
+                }
+            }
+
         }
 
 
@@ -1056,7 +1041,7 @@ namespace Multimedia_ImageProcessing
 
         private void button1_Click(object sender, EventArgs e)
         {
-         
+
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 // Cài đặt bộ lọc để chỉ cho phép chọn các tệp hình ảnh
@@ -1074,7 +1059,7 @@ namespace Multimedia_ImageProcessing
                 }
             }
         }
-        
+
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -1088,7 +1073,7 @@ namespace Multimedia_ImageProcessing
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     // Lấy tên tệp và hiển thị vào TextBox
-                    
+
                     string fileName = openFileDialog.FileName;
                     a2 = fileName;
                     textBox2.Text = Path.GetFileName(fileName); // Hoặc chỉ hiển thị tên tệp: Path.GetFileName(fileName);
