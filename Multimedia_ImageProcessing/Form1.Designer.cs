@@ -36,13 +36,17 @@
             label3 = new Label();
             label2 = new Label();
             groupBox3 = new GroupBox();
-
+            comboBox4 = new ComboBox();
+            textBox2 = new TextBox();
+            textBox1 = new TextBox();
+            button2 = new Button();
+            button1 = new Button();
             btn_rotateX = new Button();
             btn_rotateY = new Button();
-
+            label7 = new Label();
+            label6 = new Label();
             comboBox3 = new ComboBox();
             comboBox2 = new ComboBox();
-
             tb_thongSo = new TextBox();
             lbl_thongSo = new Label();
             contrastTracker = new TrackBar();
@@ -73,10 +77,6 @@
             label5 = new Label();
             btn_redo = new Button();
             btn_undo = new Button();
-
-            label6 = new Label();
-            label7 = new Label();
-
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox2.SuspendLayout();
@@ -161,15 +161,17 @@
             // 
             // groupBox3
             // 
-
+            groupBox3.Controls.Add(comboBox4);
+            groupBox3.Controls.Add(textBox2);
+            groupBox3.Controls.Add(textBox1);
+            groupBox3.Controls.Add(button2);
+            groupBox3.Controls.Add(button1);
             groupBox3.Controls.Add(btn_rotateX);
             groupBox3.Controls.Add(btn_rotateY);
-
             groupBox3.Controls.Add(label7);
             groupBox3.Controls.Add(label6);
             groupBox3.Controls.Add(comboBox3);
             groupBox3.Controls.Add(comboBox2);
-
             groupBox3.Controls.Add(tb_thongSo);
             groupBox3.Controls.Add(lbl_thongSo);
             groupBox3.Controls.Add(contrastTracker);
@@ -181,7 +183,52 @@
             groupBox3.Text = "Tuỳ chỉnh";
             groupBox3.Enter += groupBox3_Enter;
             // 
-
+            // comboBox4
+            // 
+            comboBox4.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox4.FormattingEnabled = true;
+            comboBox4.Items.AddRange(new object[] { "Chọn loại ghép", "ảnh 1 trái ảnh 2 phải", "ảnh 2 trái ảnh 1 phải", "ảnh 1 trên ảnh 2 dưới", "ảnh 2 trên ảnh 1 dưới" });
+            comboBox4.Location = new Point(6, 49);
+            comboBox4.Name = "comboBox4";
+            comboBox4.Size = new Size(161, 23);
+            comboBox4.TabIndex = 19;
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(5, 152);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(161, 23);
+            textBox2.TabIndex = 18;
+            textBox2.TextChanged += textBox2_TextChanged;
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(6, 97);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(161, 23);
+            textBox1.TabIndex = 17;
+            textBox1.TextChanged += textBox1_TextChanged;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(5, 126);
+            button2.Name = "button2";
+            button2.Size = new Size(90, 23);
+            button2.TabIndex = 16;
+            button2.Text = "Chọn ảnh 2";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(5, 72);
+            button1.Name = "button1";
+            button1.Size = new Size(90, 23);
+            button1.TabIndex = 15;
+            button1.Text = "Chọn ảnh 1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // btn_rotateX
             // 
             btn_rotateX.Location = new Point(92, 49);
@@ -201,7 +248,27 @@
             btn_rotateY.Text = "Dọc";
             btn_rotateY.UseVisualStyleBackColor = true;
             btn_rotateY.Click += btn_rotateY_Click;
-
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(9, 134);
+            label7.Name = "label7";
+            label7.Size = new Size(114, 15);
+            label7.TabIndex = 14;
+            label7.Text = "Chọn kích cỡ khung";
+            label7.Click += label7_Click;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(9, 83);
+            label6.Name = "label6";
+            label6.Size = new Size(63, 15);
+            label6.TabIndex = 13;
+            label6.Text = "Chọn màu";
+            label6.Click += label6_Click;
+            // 
             // comboBox3
             // 
             comboBox3.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -223,7 +290,6 @@
             comboBox2.Size = new Size(161, 23);
             comboBox2.TabIndex = 11;
             comboBox2.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
-
             // 
             // tb_thongSo
             // 
@@ -445,28 +511,6 @@
             btn_undo.UseVisualStyleBackColor = true;
             btn_undo.Click += btn_undo_Click;
             // 
-
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(9, 83);
-            label6.Name = "label6";
-            label6.Size = new Size(56, 15);
-            label6.TabIndex = 13;
-            label6.Text = "Chọn màu";
-            label6.Click += label6_Click;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(9, 134);
-            label7.Name = "label7";
-            label7.Size = new Size(56, 15);
-            label7.TabIndex = 14;
-            label7.Text = "Chọn kích cỡ khung";
-            label7.Click += label7_Click;
-            // 
-
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -548,6 +592,10 @@
         private ComboBox comboBox2;
         private Label label6;
         private Label label7;
-
+        private Button button1;
+        private Button button2;
+        private TextBox textBox1;
+        private TextBox textBox2;
+        private ComboBox comboBox4;
     }
 }
