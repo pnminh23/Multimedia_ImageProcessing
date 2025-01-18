@@ -22,6 +22,8 @@ namespace Multimedia_ImageProcessing
             tb_thongSo.Visible = false;
             contrastTracker.Visible = false;
             comboBox1.SelectedIndex = 0;
+            btn_rotateX.Visible = false;
+            btn_rotateY.Visible = false;
 
         }
         //public void appearChinhDoSang()
@@ -151,7 +153,10 @@ namespace Multimedia_ImageProcessing
             else if (comboBox1.SelectedIndex == 8)
             {
                 lbl_thongSo.Text = "Chiều lật";
-                appear();
+                btn_rotateX.Visible = true;
+                btn_rotateY.Visible = true;
+                tb_thongSo.Visible = false;
+                contrastTracker.Visible = false;
 
             }
             else if (comboBox1.SelectedIndex == 9)
@@ -175,6 +180,12 @@ namespace Multimedia_ImageProcessing
                 appear();
 
             }
+
+            else if (comboBox1.SelectedIndex == 11)
+            {
+                lbl_thongSo.Text = "Lấy biên ảnh bằng phương pháp sobel";
+                lbl_thongSo.Visible = true;
+
             else
             {
                 label6.Visible = false;
@@ -185,6 +196,7 @@ namespace Multimedia_ImageProcessing
                 contrastTracker.Visible = false;
                 comboBox2.Visible = false;
                 comboBox3.Visible = false;
+
             }
         }
 
@@ -529,6 +541,23 @@ namespace Multimedia_ImageProcessing
             else if (comboBox1.SelectedIndex == 10)
             {
             }
+            else if (comboBox1.SelectedIndex == 11)
+            {
+                if (open)
+                {
+                    //Bitmap original = new Bitmap(openFileDialog.FileName);
+                    imP = new imageProcess();
+                    Image im = pictureBox1.Image;
+                    Bitmap im1 = new Bitmap(im);
+                    Bitmap result = imP.ApplySobelFilter(im1);
+                    pictureBox1.Image = result;
+                    arrayImage[counter++] = pictureBox1.Image;
+                }
+                else
+                {
+                    MessageBox.Show("At first Open An Image", "File not Opened ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void contrastTracker_Scroll(object sender, EventArgs e)
@@ -725,8 +754,62 @@ namespace Multimedia_ImageProcessing
 
         }
 
+
+        private void btn_rotateY_Click(object sender, EventArgs e)
+        {
+            if (open)
+            {
+                Image im = pictureBox1.Image;
+                Bitmap im1 = new Bitmap(im);
+                im1.RotateFlip(RotateFlipType.Rotate180FlipX);
+                pictureBox1.Image = im1;
+
+            }
+            else
+            {
+                MessageBox.Show("At first Open An Image", "File not Opened ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btn_rotateX_Click(object sender, EventArgs e)
+        {
+
+            if (open)
+            {
+                Image im = pictureBox1.Image;
+                Bitmap im1 = new Bitmap(im);
+                im1.RotateFlip(RotateFlipType.Rotate180FlipY);
+                pictureBox1.Image = im1;
+                arrayImage[counter++] = pictureBox1.Image;
+            }
+            else
+            {
+                MessageBox.Show("At first Open An Image", "File not Opened ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void sobelTSMI_Click(object sender, EventArgs e)
+        {
+            if (open)
+            {
+                //Bitmap original = new Bitmap(openFileDialog.FileName);
+                imP = new imageProcess();
+                Image im = pictureBox1.Image;
+                Bitmap im1 = new Bitmap(im);
+                Bitmap result = imP.ApplySobelFilter(im1);
+                pictureBox1.Image = result;
+                arrayImage[counter++] = pictureBox1.Image;
+            }
+            else
+            {
+                MessageBox.Show("At first Open An Image", "File not Opened ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            
+
         private void label7_Click(object sender, EventArgs e)
         {
+
 
         }
     }
