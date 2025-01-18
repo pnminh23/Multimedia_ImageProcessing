@@ -13,6 +13,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{D28A0791-E9C1-435A-AEB0-3F4442E36243}|Multimedia_ImageProcessing\\Multimedia_ImageProcessing.csproj|c:\\users\\phuc\\documents\\github\\multimedia_imageprocessing\\multimedia_imageprocessing\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D28A0791-E9C1-435A-AEB0-3F4442E36243}|Multimedia_ImageProcessing\\Multimedia_ImageProcessing.csproj|solutionrelative:multimedia_imageprocessing\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D28A0791-E9C1-435A-AEB0-3F4442E36243}|Multimedia_ImageProcessing\\Multimedia_ImageProcessing.csproj|c:\\users\\phuc\\documents\\github\\multimedia_imageprocessing\\multimedia_imageprocessing\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D28A0791-E9C1-435A-AEB0-3F4442E36243}|Multimedia_ImageProcessing\\Multimedia_ImageProcessing.csproj|solutionrelative:multimedia_imageprocessing\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,11 +26,28 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Form1.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\Phuc\\Documents\\GitHub\\Multimedia_ImageProcessing\\Multimedia_ImageProcessing\\Form1.Designer.cs",
+              "RelativeDocumentMoniker": "Multimedia_ImageProcessing\\Form1.Designer.cs",
+              "ToolTip": "C:\\Users\\Phuc\\Documents\\GitHub\\Multimedia_ImageProcessing\\Multimedia_ImageProcessing\\Form1.Designer.cs",
+              "RelativeToolTip": "Multimedia_ImageProcessing\\Form1.Designer.cs",
+              "ViewState": "AgIAAGcCAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-18T16:12:30.219Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -36,7 +57,7 @@
               "RelativeDocumentMoniker": "Multimedia_ImageProcessing\\Form1.cs",
               "ToolTip": "C:\\Users\\Phuc\\Documents\\GitHub\\Multimedia_ImageProcessing\\Multimedia_ImageProcessing\\Form1.cs",
               "RelativeToolTip": "Multimedia_ImageProcessing\\Form1.cs",
-              "ViewState": "AgIAAA4DAAAAAAAAAAAcwCMDAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAIwEAAAAAAAAAAAqwJgEAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-18T14:51:49.31Z",
               "EditorCaption": ""

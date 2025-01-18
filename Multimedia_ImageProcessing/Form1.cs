@@ -184,6 +184,9 @@ namespace Multimedia_ImageProcessing
                 arrayImage[counter++] = pictureBox1.Image;
                 pictureBox1.BackgroundImage = null;
                 pictureBox1.BackColor = Color.Black;
+                
+                //phuc
+                UpdateImageInfo(openFileDialog.FileName);
             }
         }
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -1167,5 +1170,25 @@ namespace Multimedia_ImageProcessing
             yDown = e.Y;
             btn_apDung.Enabled = true;
         }
+        private void UpdateImageInfo(string filePath)
+        {
+            // Đường dẫn ảnh
+            lbl_imgAddress.Text = $"Đường dẫn: {filePath}";
+           
+            // Kích thước ảnh
+            if (pictureBox1.Image != null)
+            {
+                lbl_imgSize.Text = $"Kích thước: {pictureBox1.Image.Width} x {pictureBox1.Image.Height}px";
+            }
+            else
+            {
+                lbl_imgSize.Text = "Kích thước: Không xác định";
+            }
+
+            // Định dạng ảnh
+            string extension = Path.GetExtension(filePath)?.ToLower();
+            lbl_imgFormat.Text = $"Định dạng: {extension}";
+        }
+
     }
 }

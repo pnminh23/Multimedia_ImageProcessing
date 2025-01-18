@@ -32,9 +32,9 @@ namespace Multimedia_ImageProcessing
             groupBox1 = new GroupBox();
             pictureBox1 = new PictureBox();
             groupBox2 = new GroupBox();
-            label4 = new Label();
-            label3 = new Label();
-            label2 = new Label();
+            lbl_imgFormat = new Label();
+            lbl_imgSize = new Label();
+            lbl_imgAddress = new Label();
             groupBox3 = new GroupBox();
             comboBox4 = new ComboBox();
             textBox2 = new TextBox();
@@ -124,9 +124,9 @@ namespace Multimedia_ImageProcessing
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(label4);
-            groupBox2.Controls.Add(label3);
-            groupBox2.Controls.Add(label2);
+            groupBox2.Controls.Add(lbl_imgFormat);
+            groupBox2.Controls.Add(lbl_imgSize);
+            groupBox2.Controls.Add(lbl_imgAddress);
             groupBox2.Location = new Point(1480, 169);
             groupBox2.Margin = new Padding(6);
             groupBox2.Name = "groupBox2";
@@ -136,39 +136,39 @@ namespace Multimedia_ImageProcessing
             groupBox2.TabStop = false;
             groupBox2.Text = "Thông tin ảnh";
             // 
-            // label4
+            // lbl_imgFormat
             // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label4.Location = new Point(28, 239);
-            label4.Margin = new Padding(6, 0, 6, 0);
-            label4.Name = "label4";
-            label4.Size = new Size(133, 32);
-            label4.TabIndex = 7;
-            label4.Text = "Định dạng";
-            label4.Click += label4_Click;
+            lbl_imgFormat.AutoSize = true;
+            lbl_imgFormat.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lbl_imgFormat.Location = new Point(28, 239);
+            lbl_imgFormat.Margin = new Padding(6, 0, 6, 0);
+            lbl_imgFormat.Name = "lbl_imgFormat";
+            lbl_imgFormat.Size = new Size(133, 32);
+            lbl_imgFormat.TabIndex = 7;
+            lbl_imgFormat.Text = "Định dạng";
+            lbl_imgFormat.Click += label4_Click;
             // 
-            // label3
+            // lbl_imgSize
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label3.Location = new Point(28, 183);
-            label3.Margin = new Padding(6, 0, 6, 0);
-            label3.Name = "label3";
-            label3.Size = new Size(185, 32);
-            label3.TabIndex = 6;
-            label3.Text = "Kích thước ảnh";
+            lbl_imgSize.AutoSize = true;
+            lbl_imgSize.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lbl_imgSize.Location = new Point(28, 183);
+            lbl_imgSize.Margin = new Padding(6, 0, 6, 0);
+            lbl_imgSize.Name = "lbl_imgSize";
+            lbl_imgSize.Size = new Size(185, 32);
+            lbl_imgSize.TabIndex = 6;
+            lbl_imgSize.Text = "Kích thước ảnh";
             // 
-            // label2
+            // lbl_imgAddress
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label2.Location = new Point(28, 64);
-            label2.Margin = new Padding(6, 0, 6, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(192, 32);
-            label2.TabIndex = 5;
-            label2.Text = "Đưỡng dẫn ảnh";
+            lbl_imgAddress.AutoSize = true;
+            lbl_imgAddress.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lbl_imgAddress.Location = new Point(28, 64);
+            lbl_imgAddress.Margin = new Padding(6, 0, 6, 0);
+            lbl_imgAddress.Name = "lbl_imgAddress";
+            lbl_imgAddress.Size = new Size(192, 32);
+            lbl_imgAddress.TabIndex = 5;
+            lbl_imgAddress.Text = "Đưỡng dẫn ảnh";
             // 
             // groupBox3
             // 
@@ -589,9 +589,9 @@ namespace Multimedia_ImageProcessing
         private MenuStrip menuStrip1;
         private OpenFileDialog openFileDialog;
         private Button btn_apDung;
-        private Label label4;
-        private Label label3;
-        private Label label2;
+        private Label lbl_imgFormat;
+        private Label lbl_imgSize;
+        private Label lbl_imgAddress;
         private ComboBox comboBox1;
         private Label label5;
         private PictureBox pictureBox1;
