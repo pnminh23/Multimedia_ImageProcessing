@@ -140,7 +140,7 @@ namespace Multimedia_ImageProcessing
             // 
             lbl_imgFormat.AutoSize = true;
             lbl_imgFormat.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lbl_imgFormat.Location = new Point(28, 239);
+            lbl_imgFormat.Location = new Point(20, 322);
             lbl_imgFormat.Margin = new Padding(6, 0, 6, 0);
             lbl_imgFormat.Name = "lbl_imgFormat";
             lbl_imgFormat.Size = new Size(133, 32);
@@ -152,7 +152,7 @@ namespace Multimedia_ImageProcessing
             // 
             lbl_imgSize.AutoSize = true;
             lbl_imgSize.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lbl_imgSize.Location = new Point(28, 183);
+            lbl_imgSize.Location = new Point(20, 277);
             lbl_imgSize.Margin = new Padding(6, 0, 6, 0);
             lbl_imgSize.Name = "lbl_imgSize";
             lbl_imgSize.Size = new Size(185, 32);
@@ -163,7 +163,7 @@ namespace Multimedia_ImageProcessing
             // 
             lbl_imgAddress.AutoSize = true;
             lbl_imgAddress.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lbl_imgAddress.Location = new Point(28, 64);
+            lbl_imgAddress.Location = new Point(21, 52);
             lbl_imgAddress.Margin = new Padding(6, 0, 6, 0);
             lbl_imgAddress.Name = "lbl_imgAddress";
             lbl_imgAddress.Size = new Size(192, 32);

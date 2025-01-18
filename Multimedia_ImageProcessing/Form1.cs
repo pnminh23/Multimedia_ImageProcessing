@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Reflection.Emit;
 using System.Windows.Forms;
 //from chinh goc 
 namespace Multimedia_ImageProcessing
@@ -1153,7 +1154,7 @@ namespace Multimedia_ImageProcessing
             xUp = e.X;
             yUp = e.Y;
             Rectangle rec = new Rectangle(xDown, yDown, Math.Abs(xUp - xDown), Math.Abs(yUp - yDown));
-            using (Pen pen = new Pen(Color.YellowGreen, 3))
+            using (Pen pen = new Pen(Color.Red, 5))
             {
 
                 pictureBox1.CreateGraphics().DrawRectangle(pen, rec);
@@ -1173,8 +1174,17 @@ namespace Multimedia_ImageProcessing
         private void UpdateImageInfo(string filePath)
         {
             // Đường dẫn ảnh
-            lbl_imgAddress.Text = $"Đường dẫn: {filePath}";
            
+            lbl_imgAddress.Text = $"Đường dẫn: {filePath}";
+            string fileName = Path.GetFileName(filePath);
+
+            // Gán tên file vào tên của groupBox
+            groupBox1.Text = fileName;
+            
+
+            // Bật tính năng tự động ngắt dòng và điều chỉnh chiều rộng tối đa
+            lbl_imgAddress.MaximumSize = new Size(groupBox2.Width - 20, 0);
+
             // Kích thước ảnh
             if (pictureBox1.Image != null)
             {
@@ -1189,6 +1199,7 @@ namespace Multimedia_ImageProcessing
             string extension = Path.GetExtension(filePath)?.ToLower();
             lbl_imgFormat.Text = $"Định dạng: {extension}";
         }
+
 
     }
 }
