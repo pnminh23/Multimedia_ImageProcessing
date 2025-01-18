@@ -119,7 +119,9 @@ namespace Multimedia_ImageProcessing
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            pictureBox1.Paint += pictureBox1_Paint;
             pictureBox1.MouseDown += pictureBox1_MouseDown;
+            pictureBox1.MouseMove += pictureBox1_MouseMove;
             pictureBox1.MouseUp += pictureBox1_MouseUp;
             // 
             // groupBox2
@@ -143,9 +145,9 @@ namespace Multimedia_ImageProcessing
             lbl_imgFormat.Location = new Point(20, 322);
             lbl_imgFormat.Margin = new Padding(6, 0, 6, 0);
             lbl_imgFormat.Name = "lbl_imgFormat";
-            lbl_imgFormat.Size = new Size(133, 32);
+            lbl_imgFormat.Size = new Size(147, 32);
             lbl_imgFormat.TabIndex = 7;
-            lbl_imgFormat.Text = "Định dạng";
+            lbl_imgFormat.Text = "Định dạng :";
             lbl_imgFormat.Click += label4_Click;
             // 
             // lbl_imgSize
@@ -155,9 +157,9 @@ namespace Multimedia_ImageProcessing
             lbl_imgSize.Location = new Point(20, 277);
             lbl_imgSize.Margin = new Padding(6, 0, 6, 0);
             lbl_imgSize.Name = "lbl_imgSize";
-            lbl_imgSize.Size = new Size(185, 32);
+            lbl_imgSize.Size = new Size(150, 32);
             lbl_imgSize.TabIndex = 6;
-            lbl_imgSize.Text = "Kích thước ảnh";
+            lbl_imgSize.Text = "Kích thước :";
             // 
             // lbl_imgAddress
             // 
@@ -166,9 +168,9 @@ namespace Multimedia_ImageProcessing
             lbl_imgAddress.Location = new Point(21, 52);
             lbl_imgAddress.Margin = new Padding(6, 0, 6, 0);
             lbl_imgAddress.Name = "lbl_imgAddress";
-            lbl_imgAddress.Size = new Size(192, 32);
+            lbl_imgAddress.Size = new Size(157, 32);
             lbl_imgAddress.TabIndex = 5;
-            lbl_imgAddress.Text = "Đưỡng dẫn ảnh";
+            lbl_imgAddress.Text = "Đưỡng dẫn :";
             // 
             // groupBox3
             // 

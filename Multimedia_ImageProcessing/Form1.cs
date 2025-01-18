@@ -20,7 +20,7 @@ namespace Multimedia_ImageProcessing
         int yDown = 0;
         int xUp = 0;
         int yUp = 0;
-        Rectangle rectCropArea = new Rectangle();
+        //Rectangle rectCropArea = new Rectangle();
         System.IO.MemoryStream ms = new System.IO.MemoryStream();
         Task timeout;
         string fn = "";
@@ -185,7 +185,7 @@ namespace Multimedia_ImageProcessing
                 arrayImage[counter++] = pictureBox1.Image;
                 pictureBox1.BackgroundImage = null;
                 pictureBox1.BackColor = Color.Black;
-                
+
                 //phuc
                 UpdateImageInfo(openFileDialog.FileName);
             }
@@ -793,7 +793,7 @@ namespace Multimedia_ImageProcessing
             {
                 try
                 {
-                     //tạo bitmap                  
+                    //tạo bitmap                  
                     Bitmap sourceBitmap = new Bitmap(pictureBox1.Image);
 
                     //tạo ảnh mới sau khi đã được cắt
@@ -813,7 +813,7 @@ namespace Multimedia_ImageProcessing
                 {
                     MessageBox.Show($"Đã xảy ra lỗi khi cắt ảnh: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            
+
             }
             else if (comboBox1.SelectedIndex == 11)
             {
@@ -1148,39 +1148,74 @@ namespace Multimedia_ImageProcessing
 
         }
         //phuc
+        private Point startPoint; // Điểm bắt đầu kéo chuột
+        private Rectangle rectCropArea; // Lưu vùng chọn
+        private bool isSelecting = false; // Kiểm tra xem người dùng có bắt đầu chọn vùng không
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-            //pictureBox1.Image.Clone();
-            xUp = e.X;
-            yUp = e.Y;
-            Rectangle rec = new Rectangle(xDown, yDown, Math.Abs(xUp - xDown), Math.Abs(yUp - yDown));
-            using (Pen pen = new Pen(Color.Red, 5))
-            {
+            // Lưu vị trí thả chuột
+            int xUp = e.X;
+            int yUp = e.Y;
 
-                pictureBox1.CreateGraphics().DrawRectangle(pen, rec);
-            }
-            rectCropArea = rec;
+            // Tính toán vùng chọn (Rectangle)
+            rectCropArea = new Rectangle(
+                Math.Min(startPoint.X, xUp),
+                Math.Min(startPoint.Y, yUp),
+                Math.Abs(xUp - startPoint.X),
+                Math.Abs(yUp - startPoint.Y)
+            );
+
+            // Cập nhật kích thước vùng chọn vào label
+            lbl_imgSize.Text = $"Kích thước vùng chọn: {rectCropArea.Width} x {rectCropArea.Height} px";
+
+            // Kích hoạt nút áp dụng
             btn_apDung.Enabled = true;
+
+            // Kết thúc vùng chọn
+            isSelecting = false;
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            pictureBox1.Invalidate();
+            if (!isSelecting)
+            {
+                startPoint = e.Location;
+                isSelecting = true; // Đánh dấu đã bắt đầu chọn vùng
 
-            xDown = e.X;
-            yDown = e.Y;
-            btn_apDung.Enabled = true;
+                // Kích hoạt nút áp dụng
+                btn_apDung.Enabled = true;
+            }
+        }
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && isSelecting) // Nếu chuột đang được nhấn giữ và bắt đầu chọn
+            {
+                // Cập nhật vị trí và tính toán chiều rộng, chiều cao của vùng chọn
+                int width = Math.Abs(e.X - startPoint.X);
+                int height = Math.Abs(e.Y - startPoint.Y);
+
+                // Cập nhật lại vùng chọn (hình chữ nhật)
+                rectCropArea = new Rectangle(
+                    Math.Min(startPoint.X, e.X),
+                    Math.Min(startPoint.Y, e.Y),
+                    width,
+                    height
+                );
+
+                // Yêu cầu vẽ lại PictureBox để hiển thị animation
+                pictureBox1.Invalidate();
+            }
         }
         private void UpdateImageInfo(string filePath)
         {
             // Đường dẫn ảnh
-           
-            lbl_imgAddress.Text = $"Đường dẫn: {filePath}";
+
+            lbl_imgAddress.Text = $"Đường dẫn : {filePath}";
             string fileName = Path.GetFileName(filePath);
 
             // Gán tên file vào tên của groupBox
             groupBox1.Text = fileName;
-            
+
 
             // Bật tính năng tự động ngắt dòng và điều chỉnh chiều rộng tối đa
             lbl_imgAddress.MaximumSize = new Size(groupBox2.Width - 20, 0);
@@ -1188,18 +1223,66 @@ namespace Multimedia_ImageProcessing
             // Kích thước ảnh
             if (pictureBox1.Image != null)
             {
-                lbl_imgSize.Text = $"Kích thước: {pictureBox1.Image.Width} x {pictureBox1.Image.Height}px";
+                lbl_imgSize.Text = $"Kích thước : {pictureBox1.Image.Width} x {pictureBox1.Image.Height}px";
             }
             else
             {
-                lbl_imgSize.Text = "Kích thước: Không xác định";
+                lbl_imgSize.Text = "Kích thước : Không xác định";
             }
 
             // Định dạng ảnh
             string extension = Path.GetExtension(filePath)?.ToLower();
-            lbl_imgFormat.Text = $"Định dạng: {extension}";
+            lbl_imgFormat.Text = $"Định dạng : {extension}";
         }
 
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            if (pictureBox1.Image != null) // Kiểm tra ảnh có tồn tại không
+            {
+                if (rectCropArea != null && rectCropArea.Width > 0 && rectCropArea.Height > 0)
+                {
+                    // Lấy hình ảnh gốc từ PictureBox
+                    Bitmap originalImage = new Bitmap(pictureBox1.Image);
 
+                    // Tạo ảnh sao chép để thao tác
+                    Bitmap processedImage = new Bitmap(originalImage);
+                    Graphics g = Graphics.FromImage(processedImage);
+
+                    // Vùng được chọn sẽ không thay đổi, chỉ giảm độ sáng vùng còn lại
+                    for (int x = 0; x < processedImage.Width; x++)
+                    {
+                        for (int y = 0; y < processedImage.Height; y++)
+                        {
+                            // Kiểm tra nếu pixel nằm ngoài vùng chọn
+                            if (!rectCropArea.Contains(x, y))
+                            {
+                                // Giảm độ sáng của pixel ngoài vùng chọn (ví dụ: giảm 50%)
+                                Color originalColor = processedImage.GetPixel(x, y);
+                                int red = (int)(originalColor.R * 0.5);
+                                int green = (int)(originalColor.G * 0.5);
+                                int blue = (int)(originalColor.B * 0.5);
+
+                                // Tạo màu mới với độ sáng giảm đi
+                                Color newColor = Color.FromArgb(red, green, blue);
+                                processedImage.SetPixel(x, y, newColor);
+                            }
+                        }
+                    }
+
+                    // Vẽ ảnh đã xử lý lên PictureBox
+                    e.Graphics.DrawImage(processedImage, 0, 0);
+                }
+                else
+                {
+                    // Nếu không có vùng chọn, chỉ vẽ ảnh gốc
+                    e.Graphics.DrawImage(pictureBox1.Image, 0, 0);
+                }
+            }
+            else
+            {
+                // Nếu không có ảnh, vẽ một thông báo hoặc không làm gì
+                e.Graphics.DrawString("No image loaded", new Font("Arial", 16), Brushes.Red, new PointF(100, 100));
+            }
+        }
     }
 }
