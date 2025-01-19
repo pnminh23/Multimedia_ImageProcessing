@@ -32,6 +32,7 @@ namespace Multimedia_ImageProcessing
             groupBox1 = new GroupBox();
             pictureBox1 = new PictureBox();
             groupBox2 = new GroupBox();
+            lbl_imgSpace = new Label();
             lbl_imgFormat = new Label();
             lbl_imgSize = new Label();
             lbl_imgAddress = new Label();
@@ -126,6 +127,7 @@ namespace Multimedia_ImageProcessing
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(lbl_imgSpace);
             groupBox2.Controls.Add(lbl_imgFormat);
             groupBox2.Controls.Add(lbl_imgSize);
             groupBox2.Controls.Add(lbl_imgAddress);
@@ -137,6 +139,17 @@ namespace Multimedia_ImageProcessing
             groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "Thông tin ảnh";
+            // 
+            // lbl_imgSpace
+            // 
+            lbl_imgSpace.AutoSize = true;
+            lbl_imgSpace.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lbl_imgSpace.Location = new Point(20, 364);
+            lbl_imgSpace.Margin = new Padding(6, 0, 6, 0);
+            lbl_imgSpace.Name = "lbl_imgSpace";
+            lbl_imgSpace.Size = new Size(166, 32);
+            lbl_imgSpace.TabIndex = 8;
+            lbl_imgSpace.Text = "Dung lượng :";
             // 
             // lbl_imgFormat
             // 
@@ -154,7 +167,7 @@ namespace Multimedia_ImageProcessing
             // 
             lbl_imgSize.AutoSize = true;
             lbl_imgSize.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lbl_imgSize.Location = new Point(20, 277);
+            lbl_imgSize.Location = new Point(20, 258);
             lbl_imgSize.Margin = new Padding(6, 0, 6, 0);
             lbl_imgSize.Name = "lbl_imgSize";
             lbl_imgSize.Size = new Size(150, 32);
@@ -635,5 +648,6 @@ namespace Multimedia_ImageProcessing
         private TextBox textBox1;
         private TextBox textBox2;
         private ComboBox comboBox4;
+        private Label lbl_imgSpace;
     }
 }
