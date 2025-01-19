@@ -9,7 +9,7 @@ namespace Multimedia_ImageProcessing
     public partial class Form1 : Form
     {
         private string tenAnh;
-        private string a1,  a2;
+        private string a1, a2;
         private Bitmap bitmap;
         Image Im;
         Image[] arrayImage = new Image[50000];
@@ -31,12 +31,19 @@ namespace Multimedia_ImageProcessing
         {
 
             InitializeComponent();
+
+            //ko cần thì bỏ 
+            chỉnhSửaToolStripMenuItem.Enabled = false;
+
+
             lbl_thongSo.Visible = false;
             tb_thongSo.Visible = false;
             contrastTracker.Visible = false;
             comboBox1.SelectedIndex = 0;
             btn_rotateX.Visible = false;
             btn_rotateY.Visible = false;
+
+            btn_apDung.Enabled = false;
         }
         //public void appearChinhDoSang()
         //{
@@ -45,6 +52,26 @@ namespace Multimedia_ImageProcessing
         //    tb_thongSo.Visible = false;
 
         //}
+        public void coLat()
+        {
+            btn_rotateX.Visible = true;
+            btn_rotateY.Visible = true;
+            btn_apDung.Enabled = false;
+        }
+        public void koLat()
+        {
+            btn_rotateX.Visible = false;
+            btn_rotateY.Visible = false;
+            btn_apDung.Enabled = true;
+        }
+        public void cothongSo()
+        {
+            tb_thongSo.Enabled = true;
+        }
+        public void kothongSo()
+        {
+            tb_thongSo.Enabled = false;
+        }
         public void appear()
         {
             label6.Visible = false;
@@ -76,6 +103,8 @@ namespace Multimedia_ImageProcessing
 
         public void koghepAnh()
         {
+            tb_thongSo.Enabled = false;
+            tb_thongSo.Visible = true;
             textBox1.Text = "";
             textBox2.Text = "";
             comboBox4.Visible = false;
@@ -141,7 +170,7 @@ namespace Multimedia_ImageProcessing
                 string fileName = Path.GetFileName(openFileDialog.FileName);
                 string extension = Path.GetExtension(fileName);
                 int counter = 1;
-                string newDirectory = @"D:\picvn"; // Thư mục lưu ảnh mới
+                string newDirectory = @"C:\picvn"; // Thư mục lưu ảnh mới
                 string newFileName = "pic_VN";
 
                 //// Tạo thư mục nếu chưa tồn tại
@@ -149,7 +178,10 @@ namespace Multimedia_ImageProcessing
                 //{
                 //    Directory.CreateDirectory(newDirectory);
                 //}
-
+                if (!Directory.Exists(newDirectory))
+                {
+                    Directory.CreateDirectory(newDirectory);
+                }
                 // Kiểm tra tên file có chứa ký tự tiếng Việt hoặc dấu cách
                 if (fileName.Any(c => c > 127 || char.IsWhiteSpace(c)))
                 {
@@ -221,18 +253,24 @@ namespace Multimedia_ImageProcessing
                 /*appearChinhDoSang();*/ // Gọi hàm để thực hiện các thao tác khác nếu cần
                 appear();
                 koghepAnh();
+                cothongSo();
+                koLat();
             }
             else if (comboBox1.SelectedIndex == 2)
             {
                 lbl_thongSo.Text = "Độ mờ lẻ [1;31]";
                 appear();
                 koghepAnh();
+                cothongSo();
+                koLat();
             }
             else if (comboBox1.SelectedIndex == 3)
             {
                 lbl_thongSo.Text = "Hệ số bão hoà [-255;255]";
                 appear();
                 koghepAnh();
+                cothongSo();
+                koLat();
             }
             else if (comboBox1.SelectedIndex == 4)
             {
@@ -254,6 +292,9 @@ namespace Multimedia_ImageProcessing
                 contrastTracker.Location = new Point(tb_thongSo.Location.X,
                     tb_thongSo.Location.Y + tb_thongSo.Height + distanceFromTextBox);
 
+                kothongSo();
+                koLat();
+
             }
             else if (comboBox1.SelectedIndex == 5)
             {
@@ -265,18 +306,27 @@ namespace Multimedia_ImageProcessing
                 koghepAnh();
                 btn_rotateX.Visible = false;
                 btn_rotateY.Visible = false;
+                kothongSo();
+                koLat();
+                btn_apDung.Visible = true;
             }
             else if (comboBox1.SelectedIndex == 6)
             {
                 lbl_thongSo.Text = "Ghép ảnh";
                 //appear();
                 ghepAnh();
+                kothongSo();
+                koLat();
+
             }
             else if (comboBox1.SelectedIndex == 7)
             {
                 lbl_thongSo.Text = "Góc xoay";
                 appear();
                 koghepAnh();
+                cothongSo();
+                koLat();
+
             }
             else if (comboBox1.SelectedIndex == 8)
             {
@@ -290,6 +340,8 @@ namespace Multimedia_ImageProcessing
                 comboBox2.Visible = false;
                 comboBox3.Visible = false;
                 koghepAnh();
+                kothongSo();
+                coLat();
             }
             else if (comboBox1.SelectedIndex == 9)
             {
@@ -308,21 +360,29 @@ namespace Multimedia_ImageProcessing
                 label6.Visible = true;
                 label7.Visible = true;
                 koghepAnh();
+                kothongSo();
+                koLat();
             }
             else if (comboBox1.SelectedIndex == 10)
             {
+                //code của phúc
                 lbl_thongSo.Text = "Cắt ảnh";
                 appear();
                 koghepAnh();
+                koLat();
+                kothongSo();
             }
 
             else if (comboBox1.SelectedIndex == 11)
             {
-                lbl_thongSo.Text = "Lấy biên ảnh bằng phương pháp sobel";
+                lbl_thongSo.Text = "Hệ số sobel";
                 lbl_thongSo.Visible = true;
                 tb_thongSo.Visible = true;
                 koghepAnh();
                 contrastTracker.Visible = false;
+                btn_apDung.Enabled = true;
+                cothongSo();
+                koLat();
             }
             else
             {
@@ -336,7 +396,13 @@ namespace Multimedia_ImageProcessing
                 contrastTracker.Visible = false;
                 comboBox2.Visible = false;
                 comboBox3.Visible = false;
+
+                btn_rotateX.Visible = false;
+                btn_rotateY.Visible = false;
+                btn_apDung.Enabled = false;
+                kothongSo();
                 koghepAnh();
+                
             }
         }
 
@@ -765,7 +831,7 @@ namespace Multimedia_ImageProcessing
                 try
                 {
                     ApplyCrop();
-              
+
                     rectCropArea = Rectangle.Empty;
 
                     // Yêu cầu vẽ lại PictureBox
@@ -972,7 +1038,7 @@ namespace Multimedia_ImageProcessing
                     File.Delete(file);
                 }
             }
-            string output2 = @"D:\picvn";
+            string output2 = @"C:\picvn";
             if (Directory.Exists(output2))
             {
                 //foreach (var file in Directory.GetFiles(outputFolder, "ChangedoSang*.png"))
@@ -1145,7 +1211,7 @@ namespace Multimedia_ImageProcessing
                     // Lấy tên tệp
                     string fileName = openFileDialog.FileName;
                     string newFileName = Path.GetFileName(fileName);
-                    string newDirectory = @"D:\picvn"; // Đường dẫn lưu ảnh mới
+                    string newDirectory = @"C:\picvn"; // Đường dẫn lưu ảnh mới
                     string extension = Path.GetExtension(fileName);
                     int counter = 1;
 
@@ -1199,7 +1265,7 @@ namespace Multimedia_ImageProcessing
 
                     string fileName = openFileDialog.FileName;
                     string newFileName = Path.GetFileName(fileName);
-                    string newDirectory = @"D:\picvn"; // Đường dẫn lưu ảnh mới
+                    string newDirectory = @"C:\picvn"; // Đường dẫn lưu ảnh mới
                     string extension = Path.GetExtension(fileName);
                     int counter = 1;
 
@@ -1252,8 +1318,8 @@ namespace Multimedia_ImageProcessing
 
         }
         //phuc
-        private Point startPoint; 
-        private Rectangle rectCropArea; 
+        private Point startPoint;
+        private Rectangle rectCropArea;
         private bool isSelecting = false;
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
@@ -1290,17 +1356,17 @@ namespace Multimedia_ImageProcessing
 
         private void UpdateImageInfo(string filePath)
         {
-           
+
             lbl_imgAddress.Text = $"Đường dẫn : {filePath}";
             string fileName = Path.GetFileName(filePath);
 
-            
+
             groupBox1.Text = fileName;
 
 
             lbl_imgAddress.MaximumSize = new Size(groupBox2.Width - 20, 0);
 
-      
+
             if (pictureBox1.Image != null)
             {
                 lbl_imgSize.Text = $"Kích thước : {pictureBox1.Image.Width} x {pictureBox1.Image.Height}px";
@@ -1310,14 +1376,14 @@ namespace Multimedia_ImageProcessing
                 lbl_imgSize.Text = "Kích thước : Không xác định";
             }
 
-         
+
             string extension = Path.GetExtension(filePath)?.ToLower();
             lbl_imgFormat.Text = $"Định dạng : {extension}";
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            
+
             if (rectCropArea != null && rectCropArea.Width > 0 && rectCropArea.Height > 0)
             {
                 using (Pen pen = new Pen(Color.Red, 2))
