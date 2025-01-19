@@ -170,7 +170,7 @@ namespace Multimedia_ImageProcessing
                 string fileName = Path.GetFileName(openFileDialog.FileName);
                 string extension = Path.GetExtension(fileName);
                 int counter = 1;
-                string newDirectory = @"D:\picvn"; // Thư mục lưu ảnh mới
+                string newDirectory = @"C:\picvn"; // Thư mục lưu ảnh mới
                 string newFileName = "pic_VN";
 
                 //// Tạo thư mục nếu chưa tồn tại
@@ -1038,7 +1038,7 @@ namespace Multimedia_ImageProcessing
                     File.Delete(file);
                 }
             }
-            string output2 = @"D:\picvn";
+            string output2 = @"C:\picvn";
             if (Directory.Exists(output2))
             {
                 //foreach (var file in Directory.GetFiles(outputFolder, "ChangedoSang*.png"))
@@ -1211,7 +1211,7 @@ namespace Multimedia_ImageProcessing
                     // Lấy tên tệp
                     string fileName = openFileDialog.FileName;
                     string newFileName = Path.GetFileName(fileName);
-                    string newDirectory = @"D:\picvn"; // Đường dẫn lưu ảnh mới
+                    string newDirectory = @"C:\picvn"; // Đường dẫn lưu ảnh mới
                     string extension = Path.GetExtension(fileName);
                     int counter = 1;
 
@@ -1265,7 +1265,7 @@ namespace Multimedia_ImageProcessing
 
                     string fileName = openFileDialog.FileName;
                     string newFileName = Path.GetFileName(fileName);
-                    string newDirectory = @"D:\picvn"; // Đường dẫn lưu ảnh mới
+                    string newDirectory = @"C:\picvn"; // Đường dẫn lưu ảnh mới
                     string extension = Path.GetExtension(fileName);
                     int counter = 1;
 
