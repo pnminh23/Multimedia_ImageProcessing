@@ -1375,7 +1375,7 @@ namespace Multimedia_ImageProcessing
 
             if (rectCropArea != null && rectCropArea.Width > 0 && rectCropArea.Height > 0)
             {
-                using (Pen pen = new Pen(Color.Red, 2))
+                using (Pen pen = new Pen(Color.Red, 4))
                 {
                     e.Graphics.DrawRectangle(pen, rectCropArea);
                 }
