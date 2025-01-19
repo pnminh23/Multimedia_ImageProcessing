@@ -834,7 +834,6 @@ namespace Multimedia_ImageProcessing
 
                     rectCropArea = Rectangle.Empty;
 
-                    // Yêu cầu vẽ lại PictureBox
                     pictureBox1.Invalidate();
                 }
                 catch (Exception ex)
@@ -865,22 +864,18 @@ namespace Multimedia_ImageProcessing
         }
         private void ApplyCrop()
         {
-            // Logic cắt ảnh, tương tự đoạn mã hàm cắt đã sửa
-            // Làm mới PictureBox
+           
             pictureBox1.Refresh();
 
-            // Kiểm tra nếu có ảnh trong PictureBox
             if (pictureBox1.Image == null)
             {
                 MessageBox.Show("Không có hình ảnh nào để cắt!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Lấy kích thước hình ảnh thực tế
             Image image = pictureBox1.Image;
             float imageAspect = (float)image.Width / image.Height;
 
-            // Lấy kích thước và tọa độ thực tế của ảnh trong PictureBox
             int actualWidth, actualHeight;
             if (pictureBox1.Width / (float)pictureBox1.Height > imageAspect)
             {
@@ -896,7 +891,6 @@ namespace Multimedia_ImageProcessing
             int offsetX = (pictureBox1.Width - actualWidth) / 2;
             int offsetY = (pictureBox1.Height - actualHeight) / 2;
 
-            // Tính tọa độ vùng cắt trên hình ảnh thực tế
             float scaleX = (float)image.Width / actualWidth;
             float scaleY = (float)image.Height / actualHeight;
 
@@ -907,20 +901,16 @@ namespace Multimedia_ImageProcessing
                 (int)(rectCropArea.Height * scaleY)
             );
 
-            // Đảm bảo vùng cắt nằm trong phạm vi ảnh
             actualCropArea.Intersect(new Rectangle(0, 0, image.Width, image.Height));
 
-            // Tạo ảnh cắt
             Bitmap croppedBitmap = new Bitmap(actualCropArea.Width, actualCropArea.Height);
             using (Graphics g = Graphics.FromImage(croppedBitmap))
             {
                 g.DrawImage(image, new Rectangle(0, 0, croppedBitmap.Width, croppedBitmap.Height), actualCropArea, GraphicsUnit.Pixel);
             }
 
-            // Cập nhật ảnh đã cắt vào PictureBox
             pictureBox1.Image = croppedBitmap;
 
-            // Vô hiệu hóa nút áp dụng sau khi hoàn tất
             btn_apDung.Enabled = false;
 
             MessageBox.Show("Cắt ảnh thành công!", "Thông báo", MessageBoxButtons.OK,
@@ -1349,7 +1339,6 @@ namespace Multimedia_ImageProcessing
                     Math.Abs(e.Y - startPoint.Y)
                 );
 
-                // Vẽ lại PictureBox để hiển thị vùng chọn
                 pictureBox1.Invalidate();
             }
         }
