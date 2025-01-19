@@ -1315,7 +1315,7 @@ namespace Multimedia_ImageProcessing
         {
             isSelecting = false;
 
-            lbl_imgSize.Text = $"Kích thước vùng chọn :\n{rectCropArea.Width} x {rectCropArea.Height} px";
+            lbl_imgSize.Text = $"Kích thước : {rectCropArea.Width} x {rectCropArea.Height} px";
 
             // Kích hoạt nút áp dụng
             btn_apDung.Enabled = rectCropArea.Width > 0 && rectCropArea.Height > 0;
@@ -1365,12 +1365,9 @@ namespace Multimedia_ImageProcessing
                 lbl_imgSize.Text = "Kích thước : Không xác định";
             }
 
+
             string extension = Path.GetExtension(filePath)?.ToLower();
             lbl_imgFormat.Text = $"Định dạng : {extension}";
-
-            FileInfo fileInfo = new FileInfo(filePath);
-            double fileSizeInMB = fileInfo.Length / (1024.0 * 1024.0); 
-            lbl_imgSpace.Text = $"Dung lượng : {fileSizeInMB:F2} MB";
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -1378,7 +1375,7 @@ namespace Multimedia_ImageProcessing
 
             if (rectCropArea != null && rectCropArea.Width > 0 && rectCropArea.Height > 0)
             {
-                using (Pen pen = new Pen(Color.Red, 4))
+                using (Pen pen = new Pen(Color.Red, 2))
                 {
                     e.Graphics.DrawRectangle(pen, rectCropArea);
                 }
