@@ -1,4 +1,4 @@
-namespace Multimedia_ImageProcessing
+﻿namespace Multimedia_ImageProcessing
 {
     partial class Form1
     {
