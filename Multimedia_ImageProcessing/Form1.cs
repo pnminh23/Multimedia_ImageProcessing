@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Reflection.Emit;
 using System.Windows.Forms;
 //from chinh goc 
 namespace Multimedia_ImageProcessing
@@ -15,18 +16,34 @@ namespace Multimedia_ImageProcessing
         Boolean open = false;
         imageProcess imP;
         int counter = 0;
-
+        //phuc
+        int xDown = 0;
+        int yDown = 0;
+        int xUp = 0;
+        int yUp = 0;
+        //Rectangle rectCropArea = new Rectangle();
+        System.IO.MemoryStream ms = new System.IO.MemoryStream();
+        Task timeout;
+        string fn = "";
+        //
 
         public Form1()
         {
 
             InitializeComponent();
+
+            //ko cần thì bỏ 
+            chỉnhSửaToolStripMenuItem.Enabled = false;
+
+
             lbl_thongSo.Visible = false;
             tb_thongSo.Visible = false;
             contrastTracker.Visible = false;
             comboBox1.SelectedIndex = 0;
             btn_rotateX.Visible = false;
             btn_rotateY.Visible = false;
+
+            btn_apDung.Enabled = false;
         }
         //public void appearChinhDoSang()
         //{
@@ -35,6 +52,26 @@ namespace Multimedia_ImageProcessing
         //    tb_thongSo.Visible = false;
 
         //}
+        public void coLat()
+        {
+            btn_rotateX.Visible = true;
+            btn_rotateY.Visible = true;
+            btn_apDung.Enabled = false;
+        }
+        public void koLat()
+        {
+            btn_rotateX.Visible = false;
+            btn_rotateY.Visible = false;
+            btn_apDung.Enabled = true;
+        }
+        public void cothongSo()
+        {
+            tb_thongSo.Enabled = true;
+        }
+        public void kothongSo()
+        {
+            tb_thongSo.Enabled = false;
+        }
         public void appear()
         {
             label6.Visible = false;
@@ -63,28 +100,9 @@ namespace Multimedia_ImageProcessing
             btn_apDung.Enabled = true;
             btn_apDung.Visible = true;
         }
-        public void coLat()
-        {
-            btn_rotateX.Visible = true;
-            btn_rotateY.Visible = true;
-        }
-        public void koLat()
-        {
-            btn_rotateX.Visible = false;
-            btn_rotateY.Visible = false;
-        }
 
-        public void cothongSo()
-        {
-            tb_thongSo.Enabled = true;
-        }
-        public void kothongSo()
-        {
-            tb_thongSo.Enabled = false;
-        }
         public void koghepAnh()
         {
-            
             tb_thongSo.Enabled = false;
             tb_thongSo.Visible = true;
             textBox1.Text = "";
@@ -155,12 +173,15 @@ namespace Multimedia_ImageProcessing
                 string newDirectory = @"D:\picvn"; // Thư mục lưu ảnh mới
                 string newFileName = "pic_VN";
 
-                // Tạo thư mục nếu chưa tồn tại
+                //// Tạo thư mục nếu chưa tồn tại
+                //if (!Directory.Exists(newDirectory))
+                //{
+                //    Directory.CreateDirectory(newDirectory);
+                //}
                 if (!Directory.Exists(newDirectory))
                 {
                     Directory.CreateDirectory(newDirectory);
                 }
-
                 // Kiểm tra tên file có chứa ký tự tiếng Việt hoặc dấu cách
                 if (fileName.Any(c => c > 127 || char.IsWhiteSpace(c)))
                 {
@@ -188,6 +209,9 @@ namespace Multimedia_ImageProcessing
                 arrayImage[0] = pictureBox1.Image; // Giả sử chỉ lưu ảnh đầu tiên
                 pictureBox1.BackgroundImage = null;
                 pictureBox1.BackColor = Color.Black;
+
+                //phuc
+                UpdateImageInfo(openFileDialog.FileName);
             }
         }
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -255,7 +279,7 @@ namespace Multimedia_ImageProcessing
                 contrastTracker.Visible = true;
 
                 lbl_thongSo.Visible = true;
-                //tb_thongSo.Visible = false;
+                tb_thongSo.Visible = false;
 
                 btn_apDung.Visible = false;
 
@@ -270,6 +294,7 @@ namespace Multimedia_ImageProcessing
 
                 kothongSo();
                 koLat();
+
             }
             else if (comboBox1.SelectedIndex == 5)
             {
@@ -278,31 +303,30 @@ namespace Multimedia_ImageProcessing
                 tb_thongSo.Visible = false;
                 contrastTracker.Visible = false;
                 btn_apDung.Enabled = true;
-
-                btn_apDung.Visible = true;
                 koghepAnh();
                 btn_rotateX.Visible = false;
                 btn_rotateY.Visible = false;
                 kothongSo();
                 koLat();
+                btn_apDung.Visible = true;
             }
             else if (comboBox1.SelectedIndex == 6)
             {
                 lbl_thongSo.Text = "Ghép ảnh";
                 //appear();
                 ghepAnh();
-
                 kothongSo();
                 koLat();
+
             }
             else if (comboBox1.SelectedIndex == 7)
             {
                 lbl_thongSo.Text = "Góc xoay";
                 appear();
                 koghepAnh();
-
                 cothongSo();
                 koLat();
+
             }
             else if (comboBox1.SelectedIndex == 8)
             {
@@ -316,8 +340,8 @@ namespace Multimedia_ImageProcessing
                 comboBox2.Visible = false;
                 comboBox3.Visible = false;
                 koghepAnh();
-                coLat();
                 kothongSo();
+                coLat();
             }
             else if (comboBox1.SelectedIndex == 9)
             {
@@ -336,16 +360,17 @@ namespace Multimedia_ImageProcessing
                 label6.Visible = true;
                 label7.Visible = true;
                 koghepAnh();
-
                 kothongSo();
                 koLat();
             }
             else if (comboBox1.SelectedIndex == 10)
             {
+                //code của phúc
                 lbl_thongSo.Text = "Cắt ảnh";
                 appear();
                 koghepAnh();
                 koLat();
+                kothongSo();
             }
 
             else if (comboBox1.SelectedIndex == 11)
@@ -372,9 +397,12 @@ namespace Multimedia_ImageProcessing
                 comboBox2.Visible = false;
                 comboBox3.Visible = false;
 
+                btn_rotateX.Visible = false;
+                btn_rotateY.Visible = false;
+                btn_apDung.Enabled = false;
                 kothongSo();
                 koghepAnh();
-                koLat();
+                
             }
         }
 
@@ -797,8 +825,25 @@ namespace Multimedia_ImageProcessing
                     return;
                 }
             }
+            //phuc
             else if (comboBox1.SelectedIndex == 10)
             {
+                try
+                {
+                    ApplyCrop();
+
+                    rectCropArea = Rectangle.Empty;
+
+                    // Yêu cầu vẽ lại PictureBox
+                    pictureBox1.Invalidate();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+
+
             }
             else if (comboBox1.SelectedIndex == 11)
             {
@@ -818,7 +863,69 @@ namespace Multimedia_ImageProcessing
                 }
             }
         }
+        private void ApplyCrop()
+        {
+            // Logic cắt ảnh, tương tự đoạn mã hàm cắt đã sửa
+            // Làm mới PictureBox
+            pictureBox1.Refresh();
 
+            // Kiểm tra nếu có ảnh trong PictureBox
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Không có hình ảnh nào để cắt!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Lấy kích thước hình ảnh thực tế
+            Image image = pictureBox1.Image;
+            float imageAspect = (float)image.Width / image.Height;
+
+            // Lấy kích thước và tọa độ thực tế của ảnh trong PictureBox
+            int actualWidth, actualHeight;
+            if (pictureBox1.Width / (float)pictureBox1.Height > imageAspect)
+            {
+                actualHeight = pictureBox1.Height;
+                actualWidth = (int)(imageAspect * actualHeight);
+            }
+            else
+            {
+                actualWidth = pictureBox1.Width;
+                actualHeight = (int)(actualWidth / imageAspect);
+            }
+
+            int offsetX = (pictureBox1.Width - actualWidth) / 2;
+            int offsetY = (pictureBox1.Height - actualHeight) / 2;
+
+            // Tính tọa độ vùng cắt trên hình ảnh thực tế
+            float scaleX = (float)image.Width / actualWidth;
+            float scaleY = (float)image.Height / actualHeight;
+
+            Rectangle actualCropArea = new Rectangle(
+                (int)((rectCropArea.X - offsetX) * scaleX),
+                (int)((rectCropArea.Y - offsetY) * scaleY),
+                (int)(rectCropArea.Width * scaleX),
+                (int)(rectCropArea.Height * scaleY)
+            );
+
+            // Đảm bảo vùng cắt nằm trong phạm vi ảnh
+            actualCropArea.Intersect(new Rectangle(0, 0, image.Width, image.Height));
+
+            // Tạo ảnh cắt
+            Bitmap croppedBitmap = new Bitmap(actualCropArea.Width, actualCropArea.Height);
+            using (Graphics g = Graphics.FromImage(croppedBitmap))
+            {
+                g.DrawImage(image, new Rectangle(0, 0, croppedBitmap.Width, croppedBitmap.Height), actualCropArea, GraphicsUnit.Pixel);
+            }
+
+            // Cập nhật ảnh đã cắt vào PictureBox
+            pictureBox1.Image = croppedBitmap;
+
+            // Vô hiệu hóa nút áp dụng sau khi hoàn tất
+            btn_apDung.Enabled = false;
+
+            MessageBox.Show("Cắt ảnh thành công!", "Thông báo", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
         private void contrastTracker_Scroll(object sender, EventArgs e)
         {
             if (!open)
@@ -1154,7 +1261,8 @@ namespace Multimedia_ImageProcessing
                 // Kiểm tra nếu người dùng đã chọn một tệp
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    // Lấy tên tệp
+                    // Lấy tên tệp và hiển thị vào TextBox
+
                     string fileName = openFileDialog.FileName;
                     string newFileName = Path.GetFileName(fileName);
                     string newDirectory = @"D:\picvn"; // Đường dẫn lưu ảnh mới
@@ -1209,6 +1317,80 @@ namespace Multimedia_ImageProcessing
         {
 
         }
+        //phuc
+        private Point startPoint;
+        private Rectangle rectCropArea;
+        private bool isSelecting = false;
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            isSelecting = false;
 
+            lbl_imgSize.Text = $"Kích thước : {rectCropArea.Width} x {rectCropArea.Height} px";
+
+            // Kích hoạt nút áp dụng
+            btn_apDung.Enabled = rectCropArea.Width > 0 && rectCropArea.Height > 0;
+        }
+
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            startPoint = e.Location;
+            isSelecting = true;
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && isSelecting)
+            {
+                rectCropArea = new Rectangle(
+                    Math.Min(startPoint.X, e.X),
+                    Math.Min(startPoint.Y, e.Y),
+                    Math.Abs(e.X - startPoint.X),
+                    Math.Abs(e.Y - startPoint.Y)
+                );
+
+                // Vẽ lại PictureBox để hiển thị vùng chọn
+                pictureBox1.Invalidate();
+            }
+        }
+
+        private void UpdateImageInfo(string filePath)
+        {
+
+            lbl_imgAddress.Text = $"Đường dẫn : {filePath}";
+            string fileName = Path.GetFileName(filePath);
+
+
+            groupBox1.Text = fileName;
+
+
+            lbl_imgAddress.MaximumSize = new Size(groupBox2.Width - 20, 0);
+
+
+            if (pictureBox1.Image != null)
+            {
+                lbl_imgSize.Text = $"Kích thước : {pictureBox1.Image.Width} x {pictureBox1.Image.Height}px";
+            }
+            else
+            {
+                lbl_imgSize.Text = "Kích thước : Không xác định";
+            }
+
+
+            string extension = Path.GetExtension(filePath)?.ToLower();
+            lbl_imgFormat.Text = $"Định dạng : {extension}";
+        }
+
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+
+            if (rectCropArea != null && rectCropArea.Width > 0 && rectCropArea.Height > 0)
+            {
+                using (Pen pen = new Pen(Color.Red, 2))
+                {
+                    e.Graphics.DrawRectangle(pen, rectCropArea);
+                }
+            }
+        }
     }
 }
