@@ -803,11 +803,15 @@ namespace Multimedia_ImageProcessing
                         g.DrawImage(sourceBitmap, new Rectangle(0, 0, rectCropArea.Width, rectCropArea.Height), rectCropArea, GraphicsUnit.Pixel);
                     }
 
+<<<<<<< Updated upstream
                     pictureBox1.Image = croppedBitmap;
 
                     btn_apDung.Enabled = false;
 
                     MessageBox.Show("Cắt ảnh thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+=======
+                    pictureBox1.Invalidate();
+>>>>>>> Stashed changes
                 }
                 catch (Exception ex)
                 {
@@ -833,7 +837,58 @@ namespace Multimedia_ImageProcessing
                 }
             }
         }
+<<<<<<< Updated upstream
 
+=======
+        private void ApplyCrop()
+        {
+            
+            pictureBox1.Refresh();
+
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Không có hình ảnh nào để cắt!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            Image image = pictureBox1.Image;
+            float imageAspect = (float)image.Width / image.Height;
+
+            int actualWidth, actualHeight;
+            if (pictureBox1.Width / (float)pictureBox1.Height > imageAspect)
+            {
+                actualHeight = pictureBox1.Height; actualWidth = (int)(imageAspect * actualHeight);
+            }
+            else
+            {
+                actualWidth = pictureBox1.Width; actualHeight = (int)(actualWidth / imageAspect);
+            }
+
+            int offsetX = (pictureBox1.Width - actualWidth) / 2; int offsetY = (pictureBox1.Height - actualHeight) / 2;
+
+            float scaleX = (float)image.Width / actualWidth; float scaleY = (float)image.Height / actualHeight;
+
+            Rectangle actualCropArea = new Rectangle(
+                (int)((rectCropArea.X - offsetX) * scaleX), (int)((rectCropArea.Y - offsetY) * scaleY),
+                (int)(rectCropArea.Width * scaleX), (int)(rectCropArea.Height * scaleY)
+            );
+
+            actualCropArea.Intersect(new Rectangle(0, 0, image.Width, image.Height));
+
+            Bitmap croppedBitmap = new Bitmap(actualCropArea.Width, actualCropArea.Height);
+            using (Graphics g = Graphics.FromImage(croppedBitmap))
+            {
+                g.DrawImage(image, new Rectangle(0, 0, croppedBitmap.Width, croppedBitmap.Height), actualCropArea, GraphicsUnit.Pixel);
+            }
+
+            pictureBox1.Image = croppedBitmap;
+
+            btn_apDung.Enabled = false;
+
+            MessageBox.Show("Cắt ảnh thành công!", "Thông báo", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
+>>>>>>> Stashed changes
         private void contrastTracker_Scroll(object sender, EventArgs e)
         {
             if (!open)
@@ -1213,6 +1268,7 @@ namespace Multimedia_ImageProcessing
             lbl_imgAddress.Text = $"Đường dẫn : {filePath}";
             string fileName = Path.GetFileName(filePath);
 
+<<<<<<< Updated upstream
             // Gán tên file vào tên của groupBox
             groupBox1.Text = fileName;
 
@@ -1221,16 +1277,26 @@ namespace Multimedia_ImageProcessing
             lbl_imgAddress.MaximumSize = new Size(groupBox2.Width - 20, 0);
 
             // Kích thước ảnh
+=======
+            groupBox1.Text = fileName;
+
+            lbl_imgAddress.MaximumSize = new Size(groupBox2.Width - 20, 0);
+
+>>>>>>> Stashed changes
             if (pictureBox1.Image != null)
             {
-                lbl_imgSize.Text = $"Kích thước : {pictureBox1.Image.Width} x {pictureBox1.Image.Height}px";
+                lbl_imgSize.Text = 
+                    $"Kích thước : \n{pictureBox1.Image.Width} x {pictureBox1.Image.Height}px";
             }
             else
             {
                 lbl_imgSize.Text = "Kích thước : Không xác định";
             }
 
+<<<<<<< Updated upstream
             // Định dạng ảnh
+=======
+>>>>>>> Stashed changes
             string extension = Path.GetExtension(filePath)?.ToLower();
             lbl_imgFormat.Text = $"Định dạng : {extension}";
         }
