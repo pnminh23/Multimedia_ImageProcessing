@@ -63,9 +63,30 @@ namespace Multimedia_ImageProcessing
             btn_apDung.Enabled = true;
             btn_apDung.Visible = true;
         }
+        public void coLat()
+        {
+            btn_rotateX.Visible = true;
+            btn_rotateY.Visible = true;
+        }
+        public void koLat()
+        {
+            btn_rotateX.Visible = false;
+            btn_rotateY.Visible = false;
+        }
 
+        public void cothongSo()
+        {
+            tb_thongSo.Enabled = true;
+        }
+        public void kothongSo()
+        {
+            tb_thongSo.Enabled = false;
+        }
         public void koghepAnh()
         {
+            
+            tb_thongSo.Enabled = false;
+            tb_thongSo.Visible = true;
             textBox1.Text = "";
             textBox2.Text = "";
             comboBox4.Visible = false;
@@ -208,18 +229,24 @@ namespace Multimedia_ImageProcessing
                 /*appearChinhDoSang();*/ // Gọi hàm để thực hiện các thao tác khác nếu cần
                 appear();
                 koghepAnh();
+                cothongSo();
+                koLat();
             }
             else if (comboBox1.SelectedIndex == 2)
             {
                 lbl_thongSo.Text = "Độ mờ lẻ [1;31]";
                 appear();
                 koghepAnh();
+                cothongSo();
+                koLat();
             }
             else if (comboBox1.SelectedIndex == 3)
             {
                 lbl_thongSo.Text = "Hệ số bão hoà [-255;255]";
                 appear();
                 koghepAnh();
+                cothongSo();
+                koLat();
             }
             else if (comboBox1.SelectedIndex == 4)
             {
@@ -228,7 +255,7 @@ namespace Multimedia_ImageProcessing
                 contrastTracker.Visible = true;
 
                 lbl_thongSo.Visible = true;
-                tb_thongSo.Visible = false;
+                //tb_thongSo.Visible = false;
 
                 btn_apDung.Visible = false;
 
@@ -241,6 +268,8 @@ namespace Multimedia_ImageProcessing
                 contrastTracker.Location = new Point(tb_thongSo.Location.X,
                     tb_thongSo.Location.Y + tb_thongSo.Height + distanceFromTextBox);
 
+                kothongSo();
+                koLat();
             }
             else if (comboBox1.SelectedIndex == 5)
             {
@@ -249,21 +278,31 @@ namespace Multimedia_ImageProcessing
                 tb_thongSo.Visible = false;
                 contrastTracker.Visible = false;
                 btn_apDung.Enabled = true;
+
+                btn_apDung.Visible = true;
                 koghepAnh();
                 btn_rotateX.Visible = false;
                 btn_rotateY.Visible = false;
+                kothongSo();
+                koLat();
             }
             else if (comboBox1.SelectedIndex == 6)
             {
                 lbl_thongSo.Text = "Ghép ảnh";
                 //appear();
                 ghepAnh();
+
+                kothongSo();
+                koLat();
             }
             else if (comboBox1.SelectedIndex == 7)
             {
                 lbl_thongSo.Text = "Góc xoay";
                 appear();
                 koghepAnh();
+
+                cothongSo();
+                koLat();
             }
             else if (comboBox1.SelectedIndex == 8)
             {
@@ -277,6 +316,8 @@ namespace Multimedia_ImageProcessing
                 comboBox2.Visible = false;
                 comboBox3.Visible = false;
                 koghepAnh();
+                coLat();
+                kothongSo();
             }
             else if (comboBox1.SelectedIndex == 9)
             {
@@ -295,21 +336,28 @@ namespace Multimedia_ImageProcessing
                 label6.Visible = true;
                 label7.Visible = true;
                 koghepAnh();
+
+                kothongSo();
+                koLat();
             }
             else if (comboBox1.SelectedIndex == 10)
             {
                 lbl_thongSo.Text = "Cắt ảnh";
                 appear();
                 koghepAnh();
+                koLat();
             }
 
             else if (comboBox1.SelectedIndex == 11)
             {
-                lbl_thongSo.Text = "Lấy biên ảnh bằng phương pháp sobel";
+                lbl_thongSo.Text = "Hệ số sobel";
                 lbl_thongSo.Visible = true;
                 tb_thongSo.Visible = true;
                 koghepAnh();
                 contrastTracker.Visible = false;
+                btn_apDung.Enabled = true;
+                cothongSo();
+                koLat();
             }
             else
             {
@@ -323,7 +371,10 @@ namespace Multimedia_ImageProcessing
                 contrastTracker.Visible = false;
                 comboBox2.Visible = false;
                 comboBox3.Visible = false;
+
+                kothongSo();
                 koghepAnh();
+                koLat();
             }
         }
 
